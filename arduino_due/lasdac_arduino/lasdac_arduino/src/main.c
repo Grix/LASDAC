@@ -10,21 +10,10 @@ Lasdac main prosjekt (for Arduino Due)
 #define STATE_IDLE 0
 uint8_t state = STATE_IDLE;
 
-//structs
-typedef struct
-{
-	uint16_t x;
-	uint16_t y;
-	uint8_t r;
-	uint8_t g;
-	uint8_t b;
-	uint8_t a;
-} point;
-
 //functions
 void setup_spi(void);
 void setup_dac(void);
-void output_point(point);
+void output_point(uint8_t *pointaddress);
 
 //systick timer ISR
 void SysTick_Handler(void)
@@ -38,18 +27,19 @@ int main (void)
 	board_init();
 	setup_dac();
 	setup_spi();
-	
-	
 }
 
-void output_point(point point_arg)
+void output_point(uint8_t *pointaddress)
 {
+	//sends point data to the DACs. Argument is a pointer to an 8bit array with the following data in order:
+	//8 MSB of x, 4 LSB of x + 4 MSB of y, 8 LSB of y, r, g, b, a
+	
 	if ((dacc_get_interrupt_status(DACC) & DACC_ISR_TXRDY) == DACC_ISR_TXRDY) //if DAC ready
 	{
 		dacc_set_channel_selection(DACC, 0);
-		dacc_write_conversion_data(DACC, (uint32_t)point_arg.x);
+		dacc_write_conversion_data(DACC, (pointaddress[0] << 4) + (pointaddress[1] >> 4) );
 		dacc_set_channel_selection(DACC, 1);
-		dacc_write_conversion_data(DACC, (uint32_t)point_arg.y);
+		dacc_write_conversion_data(DACC, ((pointaddress[1] & 0xF) << 8) + pointaddress[2]);
 	}
 	//TODO: SPI for RGBA (GPIO for A?)
 }
