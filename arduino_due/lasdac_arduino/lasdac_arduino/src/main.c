@@ -23,12 +23,13 @@ void point_output(uint8_t *pointAddress);
 void blank_and_center(void);
 
 //global variables
-uint8_t *outputAddress = NULL; //current memory location for outputting point
-uint32_t outputSize = 0; //size of frame output buffer
+uint8_t *frameAddress = NULL; //start of current frame buffer
+uint32_t frameSize = 0; //size of frame buffer in bytes
+uint32_t framePos = 0; //current position in frame in byte number
+uint8_t loop = 0;
 uint32_t outputSpeed = 30000; //points per second
 uint8_t testPoint[7] = {0xFF, 0xF0, 0x00, 0b10101010, 0b10101010, 0b10101010, 0b10101010};
-uint16_t dac_val = 0;
-
+	
 //systick timer ISR
 void SysTick_Handler(void)
 {
@@ -36,10 +37,28 @@ void SysTick_Handler(void)
 	{
 		case STATE_IDLE: //do nothing
 			break;
-		case STATE_OUTPUT: //output current point
-			//TODO: Check pointer/size etc if ok
-			point_output(outputAddress);
-			outputAddress += 7;
+		case STATE_OUTPUT: //output point
+			if (framePos > (frameSize - 7))
+			{
+				//frame finished
+				if (loop)
+				{
+					framePos = 0;
+					point_output(frameAddress + framePos);
+					framePos += 7;
+				}
+				else
+				{
+					blank_and_center();
+					state = STATE_IDLE;
+				}
+			}
+			else
+			{
+				//output current point
+				point_output(frameAddress + framePos);
+				framePos += 7;
+			}
 			break;
 		case STATE_TEST:
 			point_output(&testPoint[0]);
