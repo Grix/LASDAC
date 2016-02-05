@@ -12,7 +12,7 @@ Lasdac main prosjekt (for Arduino Due)
 #define MINSPEED 1000
 
 //states
-typedef enum {STATE_IDLE, STATE_OUTPUT} state_type;
+typedef enum {STATE_IDLE, STATE_OUTPUT, STATE_TEST} state_type;
 state_type state = STATE_IDLE;
 
 //functions
@@ -26,6 +26,8 @@ void blank_and_center(void);
 uint8_t *outputAddress = NULL; //current memory location for outputting point
 uint32_t outputSize = 0; //size of frame output buffer
 uint32_t outputSpeed = 30000; //points per second
+uint8_t testPoint[7] = {0xFF, 0xF0, 0x00, 0b10101010, 0b10101010, 0b10101010, 0b10101010};
+uint16_t dac_val = 0;
 
 //systick timer ISR
 void SysTick_Handler(void)
@@ -38,6 +40,9 @@ void SysTick_Handler(void)
 			//TODO: Check pointer/size etc if ok
 			point_output(outputAddress);
 			outputAddress += 7;
+			break;
+		case STATE_TEST:
+			point_output(&testPoint[0]);
 			break;
 		default: //unexpected
 			state = STATE_IDLE;
@@ -55,6 +60,8 @@ int main (void)
 	state = STATE_IDLE;
 	speed_set(outputSpeed);
 	blank_and_center();
+	
+	state = STATE_TEST;
 }
 
 void point_output(uint8_t *pointAddress)
@@ -112,7 +119,7 @@ void spi_init(void)
 	spi_set_clock_polarity(SPI0, 0, 0);
 	spi_set_clock_phase(SPI0, 0, 0);
 	spi_set_bits_per_transfer(SPI0, 0, SPI_CSR_BITS_16_BIT);
-	spi_set_baudrate_div(SPI0, 0, ceil(sysclk_get_cpu_hz() / 30000000));
+	spi_set_baudrate_div(SPI0, 0, ceil(sysclk_get_cpu_hz() / 30000000)); //default for dac: 30000000
 	spi_set_transfer_delay(SPI0, 0, 0, 0);
 	spi_enable(SPI0);
 }
