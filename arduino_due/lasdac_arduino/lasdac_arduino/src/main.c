@@ -10,6 +10,9 @@ Lasdac main prosjekt (for Arduino Due)
 //macros
 #define MAXSPEED 50000
 #define MINSPEED 1000
+#define PIN_SHUTTER IOPORT_CREATE_PIN(PIOC,12)
+#define PIN_STATUSLED IOPORT_CREATE_PIN(PIOC,13)
+#define PIN_ERRORLED IOPORT_CREATE_PIN(PIOC,14)
 
 //states
 typedef enum {STATE_IDLE, STATE_OUTPUT, STATE_TEST} state_type;
@@ -18,7 +21,11 @@ state_type state = STATE_IDLE;
 //functions
 void spi_init(void);
 void dac_init(void);
+void iopins_init(void);
 void speed_set(uint32_t speed);
+void shutter_set(bool onoff);
+void statusled_set(bool onoff);
+void errorled_set(bool onoff);
 void point_output(uint8_t *pointAddress);
 void blank_and_center(void);
 
@@ -26,12 +33,12 @@ void blank_and_center(void);
 uint8_t *frameAddress = NULL; //start of current frame buffer
 uint32_t frameSize = 0; //size of frame buffer in bytes
 uint32_t framePos = 0; //current position in frame in byte number
-uint8_t loop = 0;
+bool loop = false;
 uint32_t outputSpeed = 30000; //points per second
 uint8_t testPoint[7] = {0xFF, 0xF0, 0x00, 0b10101010, 0b10101010, 0b10101010, 0b10101010};
 	
-//systick timer ISR
-void SysTick_Handler(void)
+
+void SysTick_Handler(void) //systick timer ISR
 {
 	switch (state)
 	{
@@ -69,12 +76,13 @@ void SysTick_Handler(void)
 	}
 }
 
-int main (void)
+int main (void) //entry function
 {
 	sysclk_init();
 	board_init();
 	dac_init();
 	spi_init();
+	iopins_init();
 	
 	state = STATE_IDLE;
 	speed_set(outputSpeed);
@@ -83,9 +91,9 @@ int main (void)
 	state = STATE_TEST;
 }
 
-void point_output(uint8_t *pointAddress)
+void point_output(uint8_t *pointAddress) //sends point data to the DACs.
 {
-	//sends point data to the DACs. Argument is a pointer to an 8bit array with the following data in order:
+	//Argument is a pointer to an 8bit array with the following data in order:
 	//8 MSB of x, 4 LSB of x + 4 MSB of y, 8 LSB of y, r, g, b, (user?)
 	
 	if ((dacc_get_interrupt_status(DACC) & DACC_ISR_TXRDY) == DACC_ISR_TXRDY) //if DAC ready
@@ -101,16 +109,14 @@ void point_output(uint8_t *pointAddress)
 	spi_write(SPI0, (pointAddress[6] << 4) + (0b1101 << 12), 0, 0); //user ?
 }
 
-void blank_and_center(void)
+void blank_and_center(void) //outputs a blanked and centered point
 {
-	//outputs a blanked and centered point
 	uint8_t neutralPoint[7] = {0x80, 0x08, 0x00, 0, 0, 0, 0};
 	point_output(&neutralPoint[0]);
 }
 
-void speed_set(uint32_t speed)
+void speed_set(uint32_t speed) //set the output speed in points per second
 {
-	//set the output speed in points per second
 	if (speed > MAXSPEED)
 		speed = MAXSPEED;
 	else if (speed < MINSPEED)
@@ -119,9 +125,30 @@ void speed_set(uint32_t speed)
 	SysTick_Config( ceil(sysclk_get_cpu_hz() / speed) );
 }
 
-void spi_init(void)
+void shutter_set(bool onoff) //set the shutter signal off or on
 {
-	//setup SPI for DAC084S085
+	ioport_set_pin_level(PIN_SHUTTER, onoff);
+}
+
+void statusled_set(bool onoff) //set the statusled on or off
+{
+	ioport_set_pin_level(PIN_ERRORLED, onoff);
+}
+
+void errorled_set(bool onoff) //set the error led on or off
+{
+	ioport_set_pin_level(PIN_ERRORLED, onoff);
+}
+
+void iopins_init(void) //setup io pins config
+{
+	ioport_set_pin_mode(PIN_SHUTTER, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_mode(PIN_STATUSLED, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_mode(PIN_ERRORLED, IOPORT_DIR_OUTPUT);
+}
+
+void spi_init(void) //setup SPI for DAC084S085
+{
 	gpio_configure_pin(SPI0_MISO_GPIO, SPI0_MISO_FLAGS);
 	gpio_configure_pin(SPI0_MOSI_GPIO, SPI0_MOSI_FLAGS);
 	gpio_configure_pin(SPI0_SPCK_GPIO, SPI0_SPCK_FLAGS);
@@ -143,9 +170,8 @@ void spi_init(void)
 	spi_enable(SPI0);
 }
 
-void dac_init(void)
+void dac_init(void) //setup sam internal DAC controller
 {
-	//setup sam internal DAC controller
 	sysclk_enable_peripheral_clock(ID_DACC);
 	dacc_reset(DACC);
 	dacc_enable_channel(DACC, 0);
