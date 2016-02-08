@@ -15,8 +15,8 @@ Lasdac main prosjekt (for Arduino Due)
 #define PIN_ERRORLED IOPORT_CREATE_PIN(PIOC,14)
 
 //states
-typedef enum {STATE_IDLE, STATE_OUTPUT, STATE_TEST} state_type;
-state_type state = STATE_IDLE;
+typedef enum {STATE_OFF, STATE_WAITING, STATE_OUTPUT, STATE_TEST} state_type;
+state_type state = STATE_OFF;
 
 //functions
 void spi_init(void);
@@ -28,6 +28,8 @@ void statusled_set(bool onoff);
 void errorled_set(bool onoff);
 void point_output(uint8_t *pointAddress);
 void blank_and_center(void);
+void start(void);
+void stop(void);
 
 //global variables
 uint8_t *frameAddress = NULL; //start of current frame buffer
@@ -42,7 +44,11 @@ void SysTick_Handler(void) //systick timer ISR
 {
 	switch (state)
 	{
-		case STATE_IDLE: //do nothing
+		case STATE_OFF: //inactive
+			shutter_set(HIGH);
+			statusled_set(LOW);
+			break;
+		case STATE_WAITING: //idle, waiting for command
 			break;
 		case STATE_OUTPUT: //output point
 			if (framePos > (frameSize - 7))
@@ -57,7 +63,7 @@ void SysTick_Handler(void) //systick timer ISR
 				else
 				{
 					blank_and_center();
-					state = STATE_IDLE;
+					state = STATE_WAITING;
 				}
 			}
 			else
@@ -71,7 +77,7 @@ void SysTick_Handler(void) //systick timer ISR
 			point_output(&testPoint[0]);
 			break;
 		default: //unexpected
-			state = STATE_IDLE;
+			state = STATE_WAITING;
 			break;
 	}
 }
@@ -84,8 +90,10 @@ int main (void) //entry function
 	spi_init();
 	iopins_init();
 	
-	state = STATE_IDLE;
 	speed_set(outputSpeed);
+	shutter_set(HIGH);
+	statusled_set(LOW);
+	errorled_set(LOW);
 	blank_and_center();
 	
 	state = STATE_TEST;
@@ -177,4 +185,17 @@ void dac_init(void) //setup sam internal DAC controller
 	dacc_enable_channel(DACC, 0);
 	dacc_enable_channel(DACC, 1);
 	dacc_set_transfer_mode(DACC, 0);
+}
+
+void start(void) //starts and initialized the DAC, must be called before output
+{
+	state = STATE_WAITING;
+	statusled_set(HIGH);
+}
+
+void stop(void) //shuts down the DAC, must be started again before output
+{
+	state = STATE_OFF;
+	statusled_set(LOW);
+	shutter_set(HIGH);
 }
