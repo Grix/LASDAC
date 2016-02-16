@@ -88,6 +88,7 @@ int main (void) //entry function
 	playFlag = true;
 	loopFlag = true;
 	frameAddress = &testFrame[0];
+	frameSize = 7000;
 }
 
 void point_output(uint8_t *pointAddress) //sends point data to the DACs.
