@@ -5,6 +5,7 @@ Lasdac main prosjekt (for Arduino Due)
 
 #include "asf.h"
 #include <math.h>
+#include <string.h>
 //#include <setup.c>
 
 //macros
@@ -14,6 +15,8 @@ Lasdac main prosjekt (for Arduino Due)
 #define PIN_SHUTTER IOPORT_CREATE_PIN(PIOC,12)
 #define PIN_STATUSLED IOPORT_CREATE_PIN(PIOC,13)
 #define PIN_ERRORLED IOPORT_CREATE_PIN(PIOC,14)
+#define FIRST_FRAME_MASK 1
+#define LAST_FRAME_MASK 2
 
 //functions
 void spi_init(void);
@@ -28,13 +31,13 @@ void blank_and_center(void);
 void start(void);
 void stop(void);
 
-//global variables
+//global variables, reserve memory for buffers
 uint32_t frameSize = 0; //size of frame buffer in bytes
 uint32_t framePos = 0; //current position in frame in byte number
 uint16_t newFrameSize = 0; //incoming frame total size in points
 uint16_t newFramePos = 0; //incoming frame position
+bool newFrameReady = false;
 bool playFlag = false; //indicates a point should be output next systick
-bool loopFlag = false; //indicates frame should be looped when reached the end
 uint32_t outputSpeed = 30000; //points per second
 uint8_t frame1[MAXFRAMESIZE * 7]; //frame buffer 1
 uint8_t frame2[MAXFRAMESIZE * 7]; //frame buffer 2
@@ -53,16 +56,16 @@ void SysTick_Handler(void) //systick timer ISR
 		if (framePos > (frameSize - 7))
 		{
 			//frame finished
-			if (loopFlag)
+			if (newFrameReady)
+			{
+				blank_and_center();
+				playFlag = false;
+			}
+			else
 			{
 				framePos = 0;
 				point_output(frameAddress + framePos);
 				framePos += 7;
-			}
-			else
-			{
-				blank_and_center();
-				playFlag = false;
 			}
 		}
 		else
@@ -79,18 +82,45 @@ void SysTick_Handler(void) //systick timer ISR
 void USB_control_placeholder(void)
 {
 	uint8_t data[512];
-	if (data[0] == 1)
+	if (data[0] & FIRST_FRAME_MASK)
 	{
 		//first packet in frame
-		speed_set( (data[1] << 8) + data[2] );
+		
+		if (newFrameReady)
+		{
+			newFrameReady = false;
+		}
+		
+		if (frameAddress == &frame1[0])
+			newFrameAddress = &frame2[0];
+		else
+			newFrameAddress = &frame1[0];
+			
 		newFramePos = 0;
+		speed_set( (data[1] << 8) + data[2] );
 		newFrameSize = ( (data[3] << 8) + data[4] );
-		uint8_t newFrameBuffer[newFrameSize * 7];
-		newFrameAddress = &newFrameBuffer[0];
 		
+		//TODO copy data from endpoint to newFrameAddress[newFramePos]
 		
-		
+// 		if ()
+// 		{
+// 			if (playFlag)
+// 			{
+// 				newFrameReady = true;
+// 			}
+// 			else
+// 			{
+// 				framePos = 0;
+// 				frameAddress = newFrameAddress;
+// 				playFlag = true;
+// 			}
+// 		}
 	}
+// 	else if (/*last frame*/)
+// 	{
+// 		
+// 	}
+	
 }
 
 int main (void) //entry function
@@ -108,10 +138,10 @@ int main (void) //entry function
 	blank_and_center();
 	
 	//testing
-	playFlag = true;
-	loopFlag = true;
-	frameAddress = &testFrame[0];
+	memcpy(&frame1[0], &testFrame[0], 7000);
+	frameAddress = &frame1[0];
 	frameSize = 7000;
+	playFlag = true;
 }
 
 void point_output(uint8_t *pointAddress) //sends point data to the DACs.
