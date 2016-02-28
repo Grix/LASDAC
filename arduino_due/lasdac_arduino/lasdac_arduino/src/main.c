@@ -49,7 +49,6 @@ void SysTick_Handler(void) //systick timer ISR
 	if (playing) 
 	{
 		statusled_set(HIGH);
-		//output point
 		if (framePos > (frameSize - 7))
 		{
 			//frame finished
@@ -79,6 +78,8 @@ void USB_iso_placeholder(void)
 {
 	uint8_t data[512];
 	bool processPacket = false;
+	bool lastPacket = false;
+	uint8_t intraFramePos = 0;
 	
 	if (newFrameReady)
 	{
@@ -87,8 +88,9 @@ void USB_iso_placeholder(void)
 		{
 			newFrameReady = false;
 			outputSpeed = ( (data[4] << 8) + data[5] );
-			newFrameSize = ( (data[6] << 8) + data[7] );
+			newFrameSize = ( (data[6] << 8) + data[7] + 4);
 			processPacket = true;
+			intraFramePos = 8;
 			newFramePos = 0;
 		}
 		else if (newFramePos != 0)
@@ -99,11 +101,40 @@ void USB_iso_placeholder(void)
 	
 	if (processPacket)
 	{
-		uint16_t intraPacketPos = 0;
-		//TODO copy data
+		uint16_t bytesToCopy = 512;
 		
-		if ( newFrameSize <= (newFramePos+512) )
-		if ( data[intraPacketPos] )
+		//if last packet in frame
+		if ( (newFrameSize - newFramePos) <= (512 - intraFramePos) )
+		{
+			//adjust copy size and position
+			bytesToCopy = newFrameSize - newFramePos;
+			lastPacket = true;
+		}
+		
+		//TODO copy data, below works?
+		memcpy(&newFrameAddress[newFramePos], &data[intraFramePos], bytesToCopy);
+		
+		//if last packet
+		if (lastPacket)
+		{
+			//check last control bytes
+			uint32_t frameEnd = newFrameAddress+newFrameSize;
+			
+			if (	( *(frameEnd-0) == 0xBB) && 
+					( *(frameEnd-1) == 0xBB) && 
+					( *(frameEnd-2) == 0xBB) &&
+					( *(frameEnd-3) == 0xBB) ) 
+			{
+				//frame valid and completed
+				newFrameReady = true;
+				if (!playing)
+				{
+					playing = true;
+					speed_set(outputSpeed);
+				}
+				
+			}
+		}
 	}
 	
 }
