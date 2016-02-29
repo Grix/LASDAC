@@ -74,21 +74,30 @@ void SysTick_Handler(void) //systick timer ISR
 		statusled_set(LOW);
 }
 
-void USB_iso_placeholder(void)
+void usb_iso_placeholder(void)
 {
 	uint8_t data[512];
+	//	Byte 0-3: First packet control bits (0xAAAAAAAA)
+	//	Byte 4-5: Scanning speed in pps (big endian)
+	//	Byte 6-7: Size of frame in points (big endian)
+	//	Byte 8-X: Point data
+	//		Each point: 8 MSB of x, 4 LSB of x + 4 MSB of y, 8 LSB of y, r, g, b, i (7 bytes total)
+	//	Byte X-4: Last packet control bits (0xBBBBBBBB)
+	
 	bool processPacket = false;
 	bool lastPacket = false;
 	uint8_t intraFramePos = 0;
 	
-	if (newFrameReady)
+	if (!newFrameReady)
 	{
-		//if first packet in frame OR not expecting first packet in frame
-		if ( (data[0] == 0xAA) && (data[1] == 0xAA) && (data[2] == 0xAA) & (data[3] == 0xAA) ) 
+		//if control bits indicate first packet in frame
+		if (	(data[0] == 0xAA) && 
+				(data[1] == 0xAA) && 
+				(data[2] == 0xAA) && 
+				(data[3] == 0xAA) ) 
 		{
-			newFrameReady = false;
 			outputSpeed = ( (data[4] << 8) + data[5] );
-			newFrameSize = ( (data[6] << 8) + data[7] + 4);
+			newFrameSize = ( ((data[6] << 8) + data[7]) * 7 + 4);
 			processPacket = true;
 			intraFramePos = 8;
 			newFramePos = 0;
@@ -101,10 +110,10 @@ void USB_iso_placeholder(void)
 	
 	if (processPacket)
 	{
-		uint16_t bytesToCopy = 512;
+		uint16_t bytesToCopy = 512 - intraFramePos;
 		
-		//if last packet in frame
-		if ( (newFrameSize - newFramePos) <= (512 - intraFramePos) )
+		//if last packet in frame expected
+		if ( (newFrameSize - newFramePos) <= bytesToCopy )
 		{
 			//adjust copy size and position
 			bytesToCopy = newFrameSize - newFramePos;
@@ -113,11 +122,12 @@ void USB_iso_placeholder(void)
 		
 		//TODO copy data, below works?
 		memcpy(&newFrameAddress[newFramePos], &data[intraFramePos], bytesToCopy);
+		newFramePos += bytesToCopy;
 		
-		//if last packet
+		//if last packet in frame expected
 		if (lastPacket)
 		{
-			//check last control bytes
+			//if control bytes indicates last packet in frame
 			uint32_t frameEnd = newFrameAddress+newFrameSize;
 			
 			if (	( *(frameEnd-0) == 0xBB) && 
@@ -125,7 +135,7 @@ void USB_iso_placeholder(void)
 					( *(frameEnd-2) == 0xBB) &&
 					( *(frameEnd-3) == 0xBB) ) 
 			{
-				//frame valid and completed
+				//frame successfully received
 				newFrameReady = true;
 				if (!playing)
 				{
@@ -134,9 +144,43 @@ void USB_iso_placeholder(void)
 				}
 				
 			}
+			else
+			{
+				//faulty frame, discard
+				newFramePos = 0;
+			}
 		}
 	}
 	
+}
+
+void usb_control_placeholder(void)
+{
+	uint8_t data[4];
+	//	Byte 0: Command
+	//	Byte 1-3: Data (big endian)
+	
+	if (data[0] == 0x01)		//STOP
+	{
+		playing = false;
+		statusled_set(LOW);
+	}
+	else if (data[0] == 0x02)	//SHUTTER
+	{
+		
+		if (data[1] == 0)
+			shutter_set(LOW);
+		else
+			shutter_set(HIGH);
+	}
+	else if (data[0] == 0x03)	//STATUS_REQUEST
+	{
+		//TODO
+	}
+	else if (data[0] == 0x04)	//CLOSE
+	{
+		//TODO
+	}
 }
 
 int main (void) //entry function
@@ -153,10 +197,10 @@ int main (void) //entry function
 	blank_and_center();
 	
 	//testing
-	memcpy(&frame1[0], &testPoint[0], 7);
+	/*memcpy(&frame1[0], &testPoint[0], 7);
 	frameAddress = &frame1[0];
 	frameSize = 7;
-	playing = true;
+	playing = true;*/
 }
 
 void point_output(uint8_t *pointAddress) //sends point data to the DACs.
