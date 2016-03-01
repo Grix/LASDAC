@@ -98,9 +98,21 @@ void usb_iso_placeholder(void)
 		{
 			outputSpeed = ( (data[4] << 8) + data[5] );
 			newFrameSize = ( ((data[6] << 8) + data[7]) * 7 + 4);
-			processPacket = true;
-			intraFramePos = 8;
-			newFramePos = 0;
+			
+			if ((outputSpeed > MAXSPEED) || (outputSpeed < MINSPEED))
+			{
+				//error: wrong speed
+			}
+			else if (newFrameSize > MAXFRAMESIZE)
+			{
+				//error: wrong size
+			}
+			else
+			{
+				intraFramePos = 8;
+				newFramePos = 0;
+				processPacket = true;
+			}
 		}
 		else if (newFramePos != 0)
 		{
@@ -128,7 +140,7 @@ void usb_iso_placeholder(void)
 		if (lastPacket)
 		{
 			//if control bytes indicates last packet in frame
-			uint32_t frameEnd = newFrameAddress+newFrameSize;
+			uint8_t* frameEnd = newFrameAddress+newFrameSize;
 			
 			if (	( *(frameEnd-0) == 0xBB) && 
 					( *(frameEnd-1) == 0xBB) && 
