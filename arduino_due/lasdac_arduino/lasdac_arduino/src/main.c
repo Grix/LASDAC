@@ -4,7 +4,6 @@ Lasdac main prosjekt (for Arduino Due)
 */
 
 #include "asf.h"
-#include <math.h>
 #include <string.h>
 //#include <setup.c>
 
@@ -180,7 +179,7 @@ void usb_control_placeholder(void)
 	else if (data[0] == 0x02)	//SHUTTER
 	{
 		
-		if (data[1] == 0)
+		if (data[3] == 0)
 			shutter_set(LOW);
 		else
 			shutter_set(HIGH);
@@ -246,7 +245,7 @@ void speed_set(uint32_t speed) //set the output speed in points per second
 	else if (speed < MINSPEED)
 		speed = MINSPEED;
 	outputSpeed = speed;
-	SysTick_Config( ceil(sysclk_get_cpu_hz() / speed) );
+	SysTick_Config( (sysclk_get_cpu_hz() / speed) + 1);
 }
 
 void shutter_set(bool onoff) //set the shutter signal off or on
@@ -289,7 +288,7 @@ void spi_init(void) //setup SPI for DAC084S085
 	spi_set_clock_polarity(SPI0, 0, 0);
 	spi_set_clock_phase(SPI0, 0, 0);
 	spi_set_bits_per_transfer(SPI0, 0, SPI_CSR_BITS_16_BIT);
-	spi_set_baudrate_div(SPI0, 0, ceil(sysclk_get_cpu_hz() / 30000000)); //default for dac: 30000000
+	spi_set_baudrate_div(SPI0, 0, (sysclk_get_cpu_hz() / 30000000) + 1 ); //default for dac: 30000000
 	spi_set_transfer_delay(SPI0, 0, 0, 0);
 	spi_enable(SPI0);
 }
