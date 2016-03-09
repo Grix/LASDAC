@@ -1,0 +1,11 @@
+Title: * D:\GitHub\LASDAC\ltspice\powersupplies.asc
+Date: Wed Mar 09 17:23:36 2016
+Plotname: Transient Analysis
+Flags: real forward
+No. Variables: 49
+No. Points:            0
+Offset:   0.0000000000000000e+000
+Command: Linear Technology Corporation LTspice IV
+Backannotation: u1 csw esw ct comm fb vcc ipk cdr
+Backannotation: u2 csw esw ct comm fb vcc ipk cdr
+Variables:
