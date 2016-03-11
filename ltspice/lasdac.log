@@ -1,4 +1,4 @@
-Circuit: * D:\GitHub\LASDAC\ltspice\lasdac.asc
+Circuit: * C:\GitHub\LASDAC\ltspice\lasdac.asc
 
 WARNING: Node N022 is floating.
 
@@ -6,24 +6,23 @@ WARNING: Less than two connections to node NC_01.  This node is used by L2.
 Per .tran options, skipping operating point for transient analysis.
 Ignoring empty pin current: Ix(u11:fb)
 Ignoring empty pin current: Ix(u12:fb)
-Heightened Def Con from 0.0435671 to 0.0435671
 
-Date: Thu Mar 10 19:14:42 2016
-Total elapsed time: 762.487 seconds.
+Date: Fri Mar 11 15:44:26 2016
+Total elapsed time: 3158.241 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 16952242
-traniter = 16952242
-tranpoints = 4506366
-accept = 3213275
-rejected = 1293092
+totiter = 38416995
+traniter = 38416995
+tranpoints = 10305721
+accept = 7369801
+rejected = 2935920
 matrix size = 320
 fillins = 1031
 solver = Normal
-Thread vector: 47.9/20.7[4] 9.8/5.7[4] 9.4/4.7[4] 2.2/2.6[1]  2592/500
-Matrix Compiler1: 91.73 KB object code size  21.5/9.9/[4.9]
-Matrix Compiler2: 44.28 KB object code size  5.9/5.5/[2.3]
+Thread vector: 65.2/34.0[4] 16.0/9.2[4] 15.4/7.0[4] 4.1/2.8[4]  2592/500
+Matrix Compiler1: 91.73 KB object code size  28.8/15.7/[9.4]
+Matrix Compiler2: 44.28 KB object code size  8.7/8.9/[4.8]
 
 
