@@ -58,6 +58,7 @@ void SysTick_Handler(void) //systick timer ISR
 			else
 			{
 				framePos = 0;
+				memcpy(&frame1[0], &testFrame[0], 2331); //testing
 				point_output(frameAddress + framePos);
 				framePos += 7;
 			}
@@ -68,6 +69,7 @@ void SysTick_Handler(void) //systick timer ISR
 			point_output(frameAddress + framePos);
 			framePos += 7;
 		}
+		statusled_set(LOW); //testing
 	}
 	else
 		statusled_set(LOW);
@@ -208,10 +210,11 @@ int main (void) //entry function
 	blank_and_center();
 	
 	//testing
-	/*memcpy(&frame1[0], &testPoint[0], 7);
+	memcpy(&frame1[0], &testFrame[0], 2331);
 	frameAddress = &frame1[0];
-	frameSize = 7;
-	playing = true;*/
+	frameSize = 2331;
+	playing = true;
+	speed_set(50000);
 }
 
 void point_output(uint8_t *pointAddress) //sends point data to the DACs.
