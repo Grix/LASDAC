@@ -1,0 +1,11 @@
+﻿  ConsoleApplication1.cpp
+c:\users\bg\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\libusb.h(738): warning C4200: nonstandard extension used: zero-sized array in struct/union
+  c:\users\bg\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\libusb.h(738): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+c:\users\bg\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\libusb.h(769): warning C4200: nonstandard extension used: zero-sized array in struct/union
+  c:\users\bg\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\libusb.h(769): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+c:\users\bg\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\libusb.h(1262): warning C4200: nonstandard extension used: zero-sized array in struct/union
+  c:\users\bg\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\libusb.h(1262): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+c:\users\bg\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\consoleapplication1.cpp(20): warning C4018: '<': signed/unsigned mismatch
+c:\users\bg\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\consoleapplication1.cpp(33): warning C4018: '<': signed/unsigned mismatch
+c:\users\bg\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\consoleapplication1.cpp(121): warning C4101: 'rc': unreferenced local variable
+  ConsoleApplication1.vcxproj -> C:\Users\BG\documents\visual studio 2015\Projects\ConsoleApplication1\Debug\ConsoleApplication1.exe
