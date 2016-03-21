@@ -87,8 +87,22 @@
 // From module: SPI - Serial Peripheral Interface
 #include <spi.h>
 
+// From module: Sleep manager - SAM implementation
+#include <sam/sleepmgr.h>
+#include <sleepmgr.h>
+
 // From module: System Clock Control - SAM3X/A implementation
 #include <sysclk.h>
+
+// From module: USB Device Stack Core (Common API)
+#include <udc.h>
+#include <udd.h>
+
+// From module: USB Device Vendor Class (Single Interface Device)
+#include <udi_vendor.h>
+
+// From module: USB Vendor Protocol
+#include <usb_protocol_vendor.h>
 
 // From module: pio_handler support enabled
 #include <pio_handler.h>
