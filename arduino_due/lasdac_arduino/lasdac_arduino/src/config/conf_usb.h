@@ -62,9 +62,9 @@
 #define  USB_DEVICE_MAJOR_VERSION         1
 #define  USB_DEVICE_MINOR_VERSION         0
 #define  USB_DEVICE_POWER                 300 // Consumption on VBUS line (mA)
-#define  USB_DEVICE_ATTR                  \
+#define  USB_DEVICE_ATTR                  (USB_CONFIG_ATTR_BUS_POWERED)
 //	(USB_CONFIG_ATTR_SELF_POWERED)
- (USB_CONFIG_ATTR_BUS_POWERED)
+
 //	(USB_CONFIG_ATTR_REMOTE_WAKEUP|USB_CONFIG_ATTR_SELF_POWERED)
 //	(USB_CONFIG_ATTR_REMOTE_WAKEUP|USB_CONFIG_ATTR_BUS_POWERED)
 
@@ -120,21 +120,21 @@
  * @{
  */
 //! Interface callback definition
-#define UDI_VENDOR_ENABLE_EXT()          true
-#define UDI_VENDOR_DISABLE_EXT()
-#define UDI_VENDOR_SETUP_OUT_RECEIVED()  false
-#define UDI_VENDOR_SETUP_IN_RECEIVED()   false
-/*
- * #define UDI_VENDOR_ENABLE_EXT() my_callback_vendor_enable()
- * extern bool my_callback_vendor_enable(void);
- * #define UDI_VENDOR_DISABLE_EXT() my_callback_vendor_disable()
- * extern void my_callback_vendor_disable(void);
- *
- * #define  UDI_VENDOR_SETUP_OUT_RECEIVED()  my_vendor_setup_out_received()
- * extern bool my_vendor_setup_out_received(void);
- * #define  UDI_VENDOR_SETUP_IN_RECEIVED()   my_vendor_setup_in_received()
- * extern bool my_vendor_setup_in_received(void);
- */
+//#define UDI_VENDOR_ENABLE_EXT()          true
+//#define UDI_VENDOR_DISABLE_EXT()
+//#define UDI_VENDOR_SETUP_OUT_RECEIVED()  false
+//#define UDI_VENDOR_SETUP_IN_RECEIVED()   false
+
+#define UDI_VENDOR_ENABLE_EXT() callback_vendor_enable()
+extern void callback_vendor_enable(void);
+#define UDI_VENDOR_DISABLE_EXT() callback_vendor_disable()
+extern void callback_vendor_disable(void);
+//
+//#define  UDI_VENDOR_SETUP_OUT_RECEIVED()  vendor_setup_out_received()
+//extern void vendor_setup_out_received(void);
+//#define  UDI_VENDOR_SETUP_IN_RECEIVED()   vendor_setup_in_received()
+//extern void vendor_setup_in_received(void);
+
 
 //! endpoints size for full speed
 //! Note: Disable the endpoints of a type, if size equal 0

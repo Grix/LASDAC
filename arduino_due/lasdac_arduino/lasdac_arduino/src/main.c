@@ -1,6 +1,14 @@
 /*
 Lasdac main prosjekt (for Arduino Due)
 
+Required Atmel Software Framework modules:
+	DACC - Digital-to-Analog Converter
+	Generic Board Support (ATSAM3X8E)
+	GPIO
+	IOPORT
+	PIO
+	SPI - Serial Perihperal Interface
+	USB Device Vendor Class
 */
 
 #include "asf.h"
@@ -35,6 +43,7 @@ uint16_t newFrameSize = 0;				//incoming frame total size in points
 uint16_t newFramePos = 0;				//incoming frame position
 bool newFrameReady = false;				//signals a new frame has been received and is ready to play when the current one ends
 bool playing = false;					//signals a point should be output next systick
+bool syncedStart = true;				//start new frame after current ends (true) or immediately after new frame received (false)
 uint32_t outputSpeed = 20000;			//points per second
 uint8_t frame1[MAXFRAMESIZE * 7];		//frame buffer 1
 uint8_t frame2[MAXFRAMESIZE * 7];		//frame buffer 2
@@ -55,12 +64,28 @@ void SysTick_Handler(void) //systick timer ISR
 			//frame finished
 			if (newFrameReady)
 			{
-				//TODO load new frame
+				//load new frame, switch buffers
+				if (frameAddress == &frame1[0])
+				{
+					frameAddress = &frame2[0];
+					newFrameAddress = &frame1[0];
+				}
+				else
+				{
+					frameAddress = &frame1[0];
+					newFrameAddress = &frame2[0];
+				}
+				newFramePos = 0;
+				newFrameReady = false;
+				speed_set(outputSpeed);
+				framePos = 0;
+				point_output(frameAddress + framePos);
+				framePos += 7;
 			}
 			else
 			{
+				//loop frame
 				framePos = 0;
-				memcpy(&frame1[0], &testFrame[0], 2331); //testing
 				point_output(frameAddress + framePos);
 				framePos += 7;
 			}
@@ -71,15 +96,12 @@ void SysTick_Handler(void) //systick timer ISR
 			point_output(frameAddress + framePos);
 			framePos += 7;
 		}
-		statusled_set(LOW); //testing
 	}
 	else
 		statusled_set(LOW);
 }
 
-UDI_VENDOR_SETUP_OUT_RECEIVED
-
-void usb_iso_placeholder(uint8_t* data)
+void usb_iso_placeholder()
 {
 	//	Byte 0-3: First packet control bits (0xAAAAAAAA)
 	//	Byte 4-5: Scanning speed in pps (big endian)
@@ -88,6 +110,7 @@ void usb_iso_placeholder(uint8_t* data)
 	//		Each point: 8 MSB of x, 4 LSB of x + 4 MSB of y, 8 LSB of y, r, g, b, i (7 bytes total)
 	//	Byte X-4: Last packet control bits (0xBBBBBBBB)
 	
+	uint8_t* data = usbIsoBufferAddress;
 	bool processPacket = false;
 	bool lastPacket = false;
 	uint8_t intraFramePos = 0;
@@ -168,6 +191,7 @@ void usb_iso_placeholder(uint8_t* data)
 		}
 	}
 	
+	udi_vendor_iso_out_run(usbIsoBufferAddress, 512, usb_iso_placeholder);
 }
 
 void usb_control_placeholder(void)
@@ -197,6 +221,17 @@ void usb_control_placeholder(void)
 	{
 		//TODO
 	}
+}
+
+void callback_vendor_enable(void)
+{
+	start();
+	udi_vendor_iso_out_run(usbIsoBufferAddress, 512, usb_iso_placeholder);
+}
+
+void callback_vendor_disable(void)
+{
+	stop();
 }
 
 int main (void) //entry function
@@ -319,6 +354,6 @@ void start(void) //starts and initialized the DAC, must be called before output
 void stop(void) //shuts down the DAC, must be started again before output
 {
 	playing = false;
+	blank_and_center();
 	statusled_set(LOW);
-	shutter_set(HIGH);
 }
