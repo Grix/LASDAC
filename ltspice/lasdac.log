@@ -1,10 +1,48 @@
-Circuit: * D:\GitHub\LASDAC\ltspice\lasdac.asc
+Circuit: * C:\GitHub\LASDAC\ltspice\lasdac.asc
 
-WARNING: Node N022 is floating.
-
-WARNING: Less than two connections to node NC_01.  This node is used by L2.
 Per .tran options, skipping operating point for transient analysis.
-Ignoring empty pin current: Ix(u11:fb)
-Ignoring empty pin current: Ix(u12:fb)
-Fatal Error: Trouble writing 4 more bytes to the disk...
-   Full?  Permission problem?
+Changing Tseed to 1.95313e-010
+Heightened Def Con from 9.00805e-009 to 1.20081e-008
+Heightened Def Con from 2.28846e-008 to 2.58846e-008
+Heightened Def Con from 2.88568e-008 to 2.88587e-008
+Heightened Def Con from 4.30436e-008 to 4.50592e-008
+Heightened Def Con from 4.5156e-008 to 4.71716e-008
+Heightened Def Con from 4.71782e-008 to 4.93032e-008
+Heightened Def Con from 6.63156e-008 to 6.93156e-008
+Heightened Def Con from 1.8737e-007 to 1.87495e-007
+Heightened Def Con from 1.87499e-007 to 1.88514e-007
+Heightened Def Con from 2.60948e-007 to 2.61198e-007
+Heightened Def Con from 2.61231e-007 to 2.64231e-007
+Heightened Def Con from 2.7979e-007 to 2.79917e-007
+Heightened Def Con from 2.84538e-007 to 2.84788e-007
+Heightened Def Con from 2.85464e-007 to 2.85714e-007
+Heightened Def Con from 2.87837e-007 to 2.90837e-007
+Heightened Def Con from 2.9128e-007 to 2.9428e-007
+Heightened Def Con from 0.000997 to 0.000997002
+Heightened Def Con from 0.000997009 to 0.00099701
+Heightened Def Con from 0.00099701 to 0.000997011
+Heightened Def Con from 0.000997012 to 0.000997013
+Heightened Def Con from 0.000997013 to 0.000997014
+Heightened Def Con from 0.000997014 to 0.000997015
+Heightened Def Con from 0.000997015 to 0.000997015
+Heightened Def Con from 0.000997015 to 0.000997018
+
+Date: Tue Mar 29 13:31:03 2016
+Total elapsed time: 0.736 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 11372
+traniter = 11372
+tranpoints = 2467
+accept = 1947
+rejected = 543
+matrix size = 240
+fillins = 856
+solver = Normal
+Thread vector: 43.0/25.0[4] 11.8/8.1[4] 8.8/5.8[4] 1.9/2.8[1]  2592/500
+Matrix Compiler1: 76.99 KB object code size  22.9/12.3/[7.6]
+Matrix Compiler2: 34.91 KB object code size  6.4/6.4/[3.1]
+
+
