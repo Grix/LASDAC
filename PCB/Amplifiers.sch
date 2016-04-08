@@ -1,0 +1,1006 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:Personal library
+LIBS:LASDAC-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 5 5
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L R R20
+U 1 1 56D616A3
+P 700 6350
+F 0 "R20" V 780 6350 50  0000 C CNN
+F 1 "10k" V 700 6350 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 630 6350 50  0001 C CNN
+F 3 "" H 700 6350 50  0000 C CNN
+	1    700  6350
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R21
+U 1 1 56D61761
+P 700 6900
+F 0 "R21" V 780 6900 50  0000 C CNN
+F 1 "10k" V 700 6900 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 630 6900 50  0001 C CNN
+F 3 "" H 700 6900 50  0000 C CNN
+	1    700  6900
+	1    0    0    -1  
+$EndComp
+Text HLabel 700  6050 1    39   UnSpc ~ 0
+2.5V
+$Comp
+L GND #PWR027
+U 1 1 56D62C05
+P 700 7250
+F 0 "#PWR027" H 700 7000 50  0001 C CNN
+F 1 "GND" H 700 7100 50  0000 C CNN
+F 2 "" H 700 7250 50  0000 C CNN
+F 3 "" H 700 7250 50  0000 C CNN
+	1    700  7250
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R31
+U 1 1 56D64139
+P 3900 7050
+F 0 "R31" V 3980 7050 50  0000 C CNN
+F 1 "10k" V 3900 7050 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 3830 7050 50  0001 C CNN
+F 3 "" H 3900 7050 50  0000 C CNN
+	1    3900 7050
+	0    1    1    0   
+$EndComp
+$Comp
+L R R30
+U 1 1 56D64552
+P 3350 7300
+F 0 "R30" V 3430 7300 50  0000 C CNN
+F 1 "10k" V 3350 7300 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 3280 7300 50  0001 C CNN
+F 3 "" H 3350 7300 50  0000 C CNN
+	1    3350 7300
+	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR028
+U 1 1 56D64930
+P 3350 7600
+F 0 "#PWR028" H 3350 7350 50  0001 C CNN
+F 1 "GND" H 3350 7450 50  0000 C CNN
+F 2 "" H 3350 7600 50  0000 C CNN
+F 3 "" H 3350 7600 50  0000 C CNN
+	1    3350 7600
+	1    0    0    -1  
+$EndComp
+Text HLabel 3250 6200 0    39   Input ~ 0
+Shutter
+Text HLabel 4750 6300 2    39   Output ~ 0
+Shutter_Out
+Text HLabel 7500 1250 0    61   Input ~ 0
+X
+Text HLabel 7550 3000 0    61   Input ~ 0
+Y
+Text HLabel 750  1400 0    61   Input ~ 0
+R
+Text HLabel 3100 1400 0    61   Input ~ 0
+G
+Text HLabel 750  2800 0    61   Input ~ 0
+B
+Text HLabel 3100 2800 0    61   Input ~ 0
+Intensity
+Text HLabel 850  1300 2    61   Output ~ 0
++R
+Text HLabel 2350 1300 2    61   Output ~ 0
+-R
+Text HLabel 3200 1300 2    61   Output ~ 0
++G
+Text HLabel 4700 1300 2    61   Output ~ 0
+-G
+Text HLabel 850  2700 2    61   Output ~ 0
++B
+Text HLabel 2350 2700 2    61   Output ~ 0
+-B
+Text HLabel 3200 2700 2    61   Output ~ 0
++Intensity
+Text HLabel 4700 2700 2    61   Output ~ 0
+-Intensity
+Text HLabel 10800 1150 2    61   Output ~ 0
++X
+Text HLabel 9200 1150 2    61   Output ~ 0
+-X
+Text HLabel 10750 2900 2    61   Output ~ 0
++Y
+Text HLabel 9150 2900 2    61   Output ~ 0
+-Y
+Text Label 2600 6700 2    60   ~ 0
+Offset
+$Comp
+L TL084_v U12
+U 1 1 56E9E17A
+P 8350 2900
+F 0 "U12" H 8600 2700 60  0000 C CNN
+F 1 "TL084_v" H 8700 3200 60  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 8350 2900 60  0001 C CNN
+F 3 "" H 8350 2900 60  0000 C CNN
+	1    8350 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL084_v U12
+U 3 1 56E9E5C2
+P 8400 1150
+F 0 "U12" H 8650 950 60  0000 C CNN
+F 1 "TL084_v" H 8750 1450 60  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 8400 1150 60  0001 C CNN
+F 3 "" H 8400 1150 60  0000 C CNN
+	3    8400 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL084_v U12
+U 2 1 56E9E60F
+P 10000 2900
+F 0 "U12" H 10250 2700 60  0000 C CNN
+F 1 "TL084_v" H 10350 3200 60  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 10000 2900 60  0001 C CNN
+F 3 "" H 10000 2900 60  0000 C CNN
+	2    10000 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL084_v U12
+U 4 1 56E9E664
+P 10000 1150
+F 0 "U12" H 10250 950 60  0000 C CNN
+F 1 "TL084_v" H 10350 1450 60  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 10000 1150 60  0001 C CNN
+F 3 "" H 10000 1150 60  0000 C CNN
+	4    10000 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R26
+U 1 1 56E9EF21
+P 2850 6650
+F 0 "R26" V 2930 6650 50  0000 C CNN
+F 1 "1.65k" V 2850 6650 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 2780 6650 50  0001 C CNN
+F 3 "" H 2850 6650 50  0000 C CNN
+	1    2850 6650
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R27
+U 1 1 56E9F016
+P 2850 7100
+F 0 "R27" V 2930 7100 50  0000 C CNN
+F 1 "10k" V 2850 7100 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 2780 7100 50  0001 C CNN
+F 3 "" H 2850 7100 50  0000 C CNN
+	1    2850 7100
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR029
+U 1 1 56E9F32E
+P 2850 7350
+F 0 "#PWR029" H 2850 7100 50  0001 C CNN
+F 1 "GND" H 2850 7200 50  0000 C CNN
+F 2 "" H 2850 7350 50  0000 C CNN
+F 3 "" H 2850 7350 50  0000 C CNN
+	1    2850 7350
+	1    0    0    -1  
+$EndComp
+Text Label 2850 6350 0    60   ~ 0
+Offset
+Text Label 2850 6900 0    60   ~ 0
+1.25V
+Text Label 7850 1050 0    60   ~ 0
+1.25V
+Text Label 7800 2800 0    60   ~ 0
+1.25V
+$Comp
+L R R34
+U 1 1 56E9FFFA
+P 7700 1250
+F 0 "R34" V 7780 1250 50  0000 C CNN
+F 1 "1.65k" V 7700 1250 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 7630 1250 50  0001 C CNN
+F 3 "" H 7700 1250 50  0000 C CNN
+	1    7700 1250
+	0    1    1    0   
+$EndComp
+$Comp
+L R R36
+U 1 1 56EA006D
+P 8450 1800
+F 0 "R36" V 8530 1800 50  0000 C CNN
+F 1 "10k" V 8450 1800 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 8380 1800 50  0001 C CNN
+F 3 "" H 8450 1800 50  0000 C CNN
+	1    8450 1800
+	0    1    1    0   
+$EndComp
+$Comp
+L R R38
+U 1 1 56EA00D3
+P 9400 1800
+F 0 "R38" V 9480 1800 50  0000 C CNN
+F 1 "10k" V 9400 1800 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 9330 1800 50  0001 C CNN
+F 3 "" H 9400 1800 50  0000 C CNN
+	1    9400 1800
+	0    1    1    0   
+$EndComp
+$Comp
+L R R40
+U 1 1 56EA0166
+P 10050 1800
+F 0 "R40" V 10130 1800 50  0000 C CNN
+F 1 "10k" V 10050 1800 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 9980 1800 50  0001 C CNN
+F 3 "" H 10050 1800 50  0000 C CNN
+	1    10050 1800
+	0    1    1    0   
+$EndComp
+Text HLabel 8400 3300 3    39   UnSpc ~ 0
+-9V
+Text HLabel 10050 1550 3    39   UnSpc ~ 0
+-9V
+Text HLabel 10050 750  1    39   UnSpc ~ 0
++9V
+Text HLabel 8450 750  1    39   UnSpc ~ 0
++9V
+$Comp
+L GND #PWR030
+U 1 1 56EA231D
+P 9650 1050
+F 0 "#PWR030" H 9650 800 50  0001 C CNN
+F 1 "GND" H 9650 900 50  0000 C CNN
+F 2 "" H 9650 1050 50  0000 C CNN
+F 3 "" H 9650 1050 50  0000 C CNN
+	1    9650 1050
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3850 6650 3850 6600
+Wire Wire Line
+	1600 7050 1600 7000
+Wire Wire Line
+	1600 6350 1600 6400
+Wire Wire Line
+	3850 6000 3850 5950
+Wire Wire Line
+	700  6050 700  6200
+Wire Wire Line
+	700  6500 700  6750
+Wire Wire Line
+	700  7050 700  7250
+Wire Wire Line
+	1150 6800 1400 6800
+Wire Wire Line
+	1150 6800 1150 7450
+Wire Wire Line
+	2000 6700 2600 6700
+Wire Wire Line
+	700  6600 1400 6600
+Connection ~ 700  6600
+Wire Wire Line
+	3350 6400 3350 7150
+Wire Wire Line
+	3350 7050 3750 7050
+Wire Wire Line
+	3350 6400 3650 6400
+Connection ~ 3350 7050
+Wire Wire Line
+	3350 7600 3350 7450
+Wire Wire Line
+	4250 6300 4750 6300
+Wire Wire Line
+	4600 6300 4600 7050
+Wire Wire Line
+	4600 7050 4050 7050
+Wire Wire Line
+	3250 6200 3650 6200
+Connection ~ 4600 6300
+Wire Wire Line
+	9200 1150 9050 1150
+Wire Wire Line
+	10650 1150 10800 1150
+Wire Wire Line
+	2300 6700 2300 7450
+Wire Wire Line
+	2300 7450 1150 7450
+Connection ~ 2300 6700
+Wire Wire Line
+	2850 7350 2850 7250
+Wire Wire Line
+	2850 6950 2850 6800
+Wire Wire Line
+	2850 6350 2850 6500
+Wire Wire Line
+	7850 1050 8050 1050
+Wire Wire Line
+	8000 2800 7800 2800
+Wire Wire Line
+	7500 1250 7550 1250
+Wire Wire Line
+	7850 1250 8050 1250
+Wire Wire Line
+	7950 1250 7950 1800
+Connection ~ 7950 1250
+Wire Wire Line
+	9100 1150 9100 1800
+Connection ~ 9100 1150
+Wire Wire Line
+	9650 1250 9600 1250
+Wire Wire Line
+	9600 1250 9600 1800
+Wire Wire Line
+	7950 1800 8300 1800
+Wire Wire Line
+	8600 1800 9250 1800
+Connection ~ 9100 1800
+Connection ~ 9600 1800
+Wire Wire Line
+	9550 1800 9900 1800
+Wire Wire Line
+	10200 1800 10700 1800
+Wire Wire Line
+	10700 1800 10700 1150
+Connection ~ 10700 1150
+Text HLabel 8450 1550 3    39   UnSpc ~ 0
+-9V
+Text HLabel 10050 3300 3    39   UnSpc ~ 0
+-9V
+$Comp
+L R R37
+U 1 1 56EA3061
+P 8450 3550
+F 0 "R37" V 8530 3550 50  0000 C CNN
+F 1 "10k" V 8450 3550 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 8380 3550 50  0001 C CNN
+F 3 "" H 8450 3550 50  0000 C CNN
+	1    8450 3550
+	0    1    1    0   
+$EndComp
+$Comp
+L R R39
+U 1 1 56EA3067
+P 9400 3550
+F 0 "R39" V 9480 3550 50  0000 C CNN
+F 1 "10k" V 9400 3550 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 9330 3550 50  0001 C CNN
+F 3 "" H 9400 3550 50  0000 C CNN
+	1    9400 3550
+	0    1    1    0   
+$EndComp
+$Comp
+L R R41
+U 1 1 56EA306D
+P 10050 3550
+F 0 "R41" V 10130 3550 50  0000 C CNN
+F 1 "10k" V 10050 3550 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 9980 3550 50  0001 C CNN
+F 3 "" H 10050 3550 50  0000 C CNN
+	1    10050 3550
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7950 3000 7950 3550
+Wire Wire Line
+	9100 2900 9100 3550
+Wire Wire Line
+	9600 3000 9600 3550
+Wire Wire Line
+	7950 3550 8300 3550
+Wire Wire Line
+	8600 3550 9250 3550
+Connection ~ 9100 3550
+Connection ~ 9600 3550
+Wire Wire Line
+	9550 3550 9900 3550
+Wire Wire Line
+	10200 3550 10700 3550
+Wire Wire Line
+	10700 3550 10700 2900
+$Comp
+L R R35
+U 1 1 56EA31F4
+P 7750 3000
+F 0 "R35" V 7830 3000 50  0000 C CNN
+F 1 "1.65k" V 7750 3000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 7680 3000 50  0001 C CNN
+F 3 "" H 7750 3000 50  0000 C CNN
+	1    7750 3000
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7900 3000 8000 3000
+Connection ~ 7950 3000
+Wire Wire Line
+	7600 3000 7550 3000
+Wire Wire Line
+	9000 2900 9150 2900
+Wire Wire Line
+	9600 3000 9650 3000
+Wire Wire Line
+	10650 2900 10750 2900
+Text HLabel 8400 2500 1    39   UnSpc ~ 0
++9V
+Connection ~ 10700 2900
+Connection ~ 9100 2900
+Text HLabel 10050 2500 1    39   UnSpc ~ 0
++9V
+$Comp
+L GND #PWR031
+U 1 1 56EA45CC
+P 9650 2800
+F 0 "#PWR031" H 9650 2550 50  0001 C CNN
+F 1 "GND" H 9650 2650 50  0000 C CNN
+F 2 "" H 9650 2800 50  0000 C CNN
+F 3 "" H 9650 2800 50  0000 C CNN
+	1    9650 2800
+	0    1    1    0   
+$EndComp
+Text Notes 6750 1550 0    39   ~ 0
+X and Y position amplifiers\n
+$Comp
+L R R24
+U 1 1 56EA7AF7
+P 1650 1950
+F 0 "R24" V 1730 1950 50  0000 C CNN
+F 1 "10k" V 1650 1950 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 1580 1950 50  0001 C CNN
+F 3 "" H 1650 1950 50  0000 C CNN
+	1    1650 1950
+	0    1    1    0   
+$EndComp
+$Comp
+L R R22
+U 1 1 56EA82A0
+P 1000 1400
+F 0 "R22" V 1080 1400 50  0000 C CNN
+F 1 "10k" V 1000 1400 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 930 1400 50  0001 C CNN
+F 3 "" H 1000 1400 50  0000 C CNN
+	1    1000 1400
+	0    1    1    0   
+$EndComp
+Text HLabel 1650 900  1    39   UnSpc ~ 0
++9V
+Text HLabel 1650 1700 3    39   UnSpc ~ 0
+-9V
+Wire Wire Line
+	1150 1400 1250 1400
+Wire Wire Line
+	1200 1400 1200 1950
+Wire Wire Line
+	1200 1950 1500 1950
+Connection ~ 1200 1400
+Wire Wire Line
+	1800 1950 2300 1950
+Wire Wire Line
+	2300 1950 2300 1300
+Wire Wire Line
+	2250 1300 2350 1300
+$Comp
+L GND #PWR032
+U 1 1 56EA914F
+P 1250 1200
+F 0 "#PWR032" H 1250 950 50  0001 C CNN
+F 1 "GND" H 1250 1050 50  0000 C CNN
+F 2 "" H 1250 1200 50  0000 C CNN
+F 3 "" H 1250 1200 50  0000 C CNN
+	1    1250 1200
+	0    1    1    0   
+$EndComp
+Connection ~ 2300 1300
+Text HLabel 4000 900  1    39   UnSpc ~ 0
++9V
+Text HLabel 4000 1700 3    39   UnSpc ~ 0
+-9V
+$Comp
+L GND #PWR033
+U 1 1 56EAAE4F
+P 3600 1200
+F 0 "#PWR033" H 3600 950 50  0001 C CNN
+F 1 "GND" H 3600 1050 50  0000 C CNN
+F 2 "" H 3600 1200 50  0000 C CNN
+F 3 "" H 3600 1200 50  0000 C CNN
+	1    3600 1200
+	0    1    1    0   
+$EndComp
+$Comp
+L R R28
+U 1 1 56EAAECA
+P 3350 1400
+F 0 "R28" V 3430 1400 50  0000 C CNN
+F 1 "10k" V 3350 1400 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 3280 1400 50  0001 C CNN
+F 3 "" H 3350 1400 50  0000 C CNN
+	1    3350 1400
+	0    1    1    0   
+$EndComp
+$Comp
+L R R32
+U 1 1 56EAB260
+P 4000 1950
+F 0 "R32" V 4080 1950 50  0000 C CNN
+F 1 "10k" V 4000 1950 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 3930 1950 50  0001 C CNN
+F 3 "" H 4000 1950 50  0000 C CNN
+	1    4000 1950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3100 1400 3200 1400
+Wire Wire Line
+	3500 1400 3600 1400
+Wire Wire Line
+	3850 1950 3550 1950
+Wire Wire Line
+	3550 1950 3550 1400
+Connection ~ 3550 1400
+Wire Wire Line
+	4600 1300 4700 1300
+Wire Wire Line
+	4650 1300 4650 1950
+Wire Wire Line
+	4650 1950 4150 1950
+Connection ~ 4650 1300
+Wire Wire Line
+	3150 1300 3150 1400
+Connection ~ 3150 1400
+Wire Wire Line
+	3200 1300 3150 1300
+Wire Wire Line
+	850  1400 750  1400
+Wire Wire Line
+	850  1300 800  1300
+Wire Wire Line
+	800  1300 800  1400
+Connection ~ 800  1400
+Text HLabel 1650 2300 1    39   UnSpc ~ 0
++9V
+Text HLabel 1650 3100 3    39   UnSpc ~ 0
+-9V
+$Comp
+L R R25
+U 1 1 56EABFA6
+P 1650 3350
+F 0 "R25" V 1730 3350 50  0000 C CNN
+F 1 "10k" V 1650 3350 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 1580 3350 50  0001 C CNN
+F 3 "" H 1650 3350 50  0000 C CNN
+	1    1650 3350
+	0    1    1    0   
+$EndComp
+$Comp
+L R R23
+U 1 1 56EAC04E
+P 1000 2800
+F 0 "R23" V 1080 2800 50  0000 C CNN
+F 1 "10k" V 1000 2800 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 930 2800 50  0001 C CNN
+F 3 "" H 1000 2800 50  0000 C CNN
+	1    1000 2800
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR034
+U 1 1 56EAC37C
+P 1250 2600
+F 0 "#PWR034" H 1250 2350 50  0001 C CNN
+F 1 "GND" H 1250 2450 50  0000 C CNN
+F 2 "" H 1250 2600 50  0000 C CNN
+F 3 "" H 1250 2600 50  0000 C CNN
+	1    1250 2600
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	750  2800 850  2800
+Wire Wire Line
+	850  2700 800  2700
+Wire Wire Line
+	800  2700 800  2800
+Connection ~ 800  2800
+Wire Wire Line
+	1150 2800 1250 2800
+Wire Wire Line
+	1200 2800 1200 3350
+Wire Wire Line
+	1200 3350 1500 3350
+Connection ~ 1200 2800
+Wire Wire Line
+	1800 3350 2300 3350
+Wire Wire Line
+	2300 3350 2300 2700
+Wire Wire Line
+	2250 2700 2350 2700
+Connection ~ 2300 2700
+Text HLabel 4000 2300 1    39   UnSpc ~ 0
++9V
+Text HLabel 4000 3100 3    39   UnSpc ~ 0
+-9V
+$Comp
+L R R29
+U 1 1 56EAD5A0
+P 3350 2800
+F 0 "R29" V 3430 2800 50  0000 C CNN
+F 1 "10k" V 3350 2800 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 3280 2800 50  0001 C CNN
+F 3 "" H 3350 2800 50  0000 C CNN
+	1    3350 2800
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3100 2800 3200 2800
+Wire Wire Line
+	3500 2800 3600 2800
+$Comp
+L R R33
+U 1 1 56EAD91A
+P 4000 3350
+F 0 "R33" V 4080 3350 50  0000 C CNN
+F 1 "10k" V 4000 3350 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805" V 3930 3350 50  0001 C CNN
+F 3 "" H 4000 3350 50  0000 C CNN
+	1    4000 3350
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3550 2800 3550 3350
+Wire Wire Line
+	3550 3350 3850 3350
+Connection ~ 3550 2800
+Wire Wire Line
+	4150 3350 4650 3350
+Wire Wire Line
+	4650 3350 4650 2700
+Wire Wire Line
+	4600 2700 4700 2700
+Connection ~ 4650 2700
+$Comp
+L GND #PWR035
+U 1 1 56EADE6C
+P 3600 2600
+F 0 "#PWR035" H 3600 2350 50  0001 C CNN
+F 1 "GND" H 3600 2450 50  0000 C CNN
+F 2 "" H 3600 2600 50  0000 C CNN
+F 3 "" H 3600 2600 50  0000 C CNN
+	1    3600 2600
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3200 2700 3150 2700
+Wire Wire Line
+	3150 2700 3150 2800
+Connection ~ 3150 2800
+Text HLabel 3850 5950 1    39   UnSpc ~ 0
++9V
+Text HLabel 3850 6650 3    39   UnSpc ~ 0
+-9V
+Text HLabel 1600 6350 1    39   UnSpc ~ 0
++9V
+Text HLabel 1600 7050 3    39   UnSpc ~ 0
+-9V
+$Comp
+L C_Small C17
+U 1 1 56ECBD65
+P 9650 5100
+F 0 "C17" H 9660 5170 50  0000 L CNN
+F 1 "100nF" H 9660 5020 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" H 9650 5100 50  0001 C CNN
+F 3 "" H 9650 5100 50  0000 C CNN
+	1    9650 5100
+	-1   0    0    1   
+$EndComp
+Text HLabel 9650 4950 1    39   UnSpc ~ 0
++9V
+Text HLabel 10100 4950 1    39   UnSpc ~ 0
++9V
+Text HLabel 10650 4950 1    39   UnSpc ~ 0
++9V
+$Comp
+L C_Small C19
+U 1 1 56ECC944
+P 10100 5100
+F 0 "C19" H 10110 5170 50  0000 L CNN
+F 1 "100nF" H 10110 5020 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" H 10100 5100 50  0001 C CNN
+F 3 "" H 10100 5100 50  0000 C CNN
+	1    10100 5100
+	-1   0    0    1   
+$EndComp
+$Comp
+L C_Small C21
+U 1 1 56ECC9C0
+P 10650 5100
+F 0 "C21" H 10660 5170 50  0000 L CNN
+F 1 "100nF" H 10660 5020 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" H 10650 5100 50  0001 C CNN
+F 3 "" H 10650 5100 50  0000 C CNN
+	1    10650 5100
+	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR036
+U 1 1 56ECCA82
+P 9650 5250
+F 0 "#PWR036" H 9650 5000 50  0001 C CNN
+F 1 "GND" H 9650 5100 50  0000 C CNN
+F 2 "" H 9650 5250 50  0000 C CNN
+F 3 "" H 9650 5250 50  0000 C CNN
+	1    9650 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR037
+U 1 1 56ECCB03
+P 10100 5250
+F 0 "#PWR037" H 10100 5000 50  0001 C CNN
+F 1 "GND" H 10100 5100 50  0000 C CNN
+F 2 "" H 10100 5250 50  0000 C CNN
+F 3 "" H 10100 5250 50  0000 C CNN
+	1    10100 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR038
+U 1 1 56ECCB7D
+P 10650 5250
+F 0 "#PWR038" H 10650 5000 50  0001 C CNN
+F 1 "GND" H 10650 5100 50  0000 C CNN
+F 2 "" H 10650 5250 50  0000 C CNN
+F 3 "" H 10650 5250 50  0000 C CNN
+	1    10650 5250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9650 4950 9650 5000
+Wire Wire Line
+	9650 5200 9650 5250
+Wire Wire Line
+	10100 4950 10100 5000
+Wire Wire Line
+	10100 5200 10100 5250
+Wire Wire Line
+	10650 5200 10650 5250
+Wire Wire Line
+	10650 4950 10650 5000
+$Comp
+L C_Small C18
+U 1 1 56ECD04E
+P 9650 5900
+F 0 "C18" H 9660 5970 50  0000 L CNN
+F 1 "100nF" H 9660 5820 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" H 9650 5900 50  0001 C CNN
+F 3 "" H 9650 5900 50  0000 C CNN
+	1    9650 5900
+	-1   0    0    1   
+$EndComp
+$Comp
+L C_Small C20
+U 1 1 56ECD054
+P 10100 5900
+F 0 "C20" H 10110 5970 50  0000 L CNN
+F 1 "100nF" H 10110 5820 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" H 10100 5900 50  0001 C CNN
+F 3 "" H 10100 5900 50  0000 C CNN
+	1    10100 5900
+	-1   0    0    1   
+$EndComp
+$Comp
+L C_Small C22
+U 1 1 56ECD05A
+P 10650 5900
+F 0 "C22" H 10660 5970 50  0000 L CNN
+F 1 "100nF" H 10660 5820 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" H 10650 5900 50  0001 C CNN
+F 3 "" H 10650 5900 50  0000 C CNN
+	1    10650 5900
+	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR039
+U 1 1 56ECD060
+P 9650 6050
+F 0 "#PWR039" H 9650 5800 50  0001 C CNN
+F 1 "GND" H 9650 5900 50  0000 C CNN
+F 2 "" H 9650 6050 50  0000 C CNN
+F 3 "" H 9650 6050 50  0000 C CNN
+	1    9650 6050
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR040
+U 1 1 56ECD066
+P 10100 6050
+F 0 "#PWR040" H 10100 5800 50  0001 C CNN
+F 1 "GND" H 10100 5900 50  0000 C CNN
+F 2 "" H 10100 6050 50  0000 C CNN
+F 3 "" H 10100 6050 50  0000 C CNN
+	1    10100 6050
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR041
+U 1 1 56ECD06C
+P 10650 6050
+F 0 "#PWR041" H 10650 5800 50  0001 C CNN
+F 1 "GND" H 10650 5900 50  0000 C CNN
+F 2 "" H 10650 6050 50  0000 C CNN
+F 3 "" H 10650 6050 50  0000 C CNN
+	1    10650 6050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9650 5750 9650 5800
+Wire Wire Line
+	9650 6000 9650 6050
+Wire Wire Line
+	10100 5750 10100 5800
+Wire Wire Line
+	10100 6000 10100 6050
+Wire Wire Line
+	10650 6000 10650 6050
+Wire Wire Line
+	10650 5750 10650 5800
+Text HLabel 9650 5750 1    39   UnSpc ~ 0
+-9V
+Text HLabel 10100 5750 1    39   UnSpc ~ 0
+-9V
+Text HLabel 10650 5750 1    39   UnSpc ~ 0
+-9V
+Text Notes 8950 4650 0    39   ~ 0
+Decoupling caps, place as close to opamps as possible. ceramic\n\n
+$Comp
+L C_Small C15
+U 1 1 56FC5661
+P 8450 2050
+F 0 "C15" V 8550 2100 50  0000 L CNN
+F 1 "390pF" V 8600 1850 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" H 8450 2050 50  0001 C CNN
+F 3 "" H 8450 2050 50  0000 C CNN
+	1    8450 2050
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	8350 2050 8250 2050
+Wire Wire Line
+	8250 2050 8250 1800
+Connection ~ 8250 1800
+Wire Wire Line
+	8550 2050 8650 2050
+Wire Wire Line
+	8650 2050 8650 1800
+Connection ~ 8650 1800
+$Comp
+L C_Small C16
+U 1 1 56FC5BD0
+P 8450 3750
+F 0 "C16" V 8550 3800 50  0000 L CNN
+F 1 "390pF" V 8600 3550 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" H 8450 3750 50  0001 C CNN
+F 3 "" H 8450 3750 50  0000 C CNN
+	1    8450 3750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	8350 3750 8250 3750
+Wire Wire Line
+	8250 3750 8250 3550
+Connection ~ 8250 3550
+Wire Wire Line
+	8550 3750 8650 3750
+Wire Wire Line
+	8650 3750 8650 3550
+Connection ~ 8650 3550
+$Comp
+L LM358 U11
+U 1 1 56FC6EA1
+P 1700 6700
+F 0 "U11" H 1650 6900 50  0000 L CNN
+F 1 "LM358" H 1650 6450 50  0000 L CNN
+F 2 "Housings_SOIC:SOIC-8_3.9x4.9mm_Pitch1.27mm" H 1700 6700 50  0001 C CNN
+F 3 "" H 1700 6700 50  0000 C CNN
+	1    1700 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L LM358 U11
+U 2 1 56FC6F7E
+P 3950 6300
+F 0 "U11" H 3900 6500 50  0000 L CNN
+F 1 "LM358" H 3900 6050 50  0000 L CNN
+F 2 "Housings_SOIC:SOIC-8_3.9x4.9mm_Pitch1.27mm" H 3950 6300 50  0001 C CNN
+F 3 "" H 3950 6300 50  0000 C CNN
+	2    3950 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL084_v U10
+U 1 1 56FAD544
+P 3950 2700
+F 0 "U10" H 4200 2500 60  0000 C CNN
+F 1 "TL084_v" H 4300 3000 60  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 3950 2700 60  0001 C CNN
+F 3 "" H 3950 2700 60  0000 C CNN
+	1    3950 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL084_v U10
+U 3 1 56FAD5F9
+P 3950 1300
+F 0 "U10" H 4200 1100 60  0000 C CNN
+F 1 "TL084_v" H 4300 1600 60  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 3950 1300 60  0001 C CNN
+F 3 "" H 3950 1300 60  0000 C CNN
+	3    3950 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL084_v U10
+U 2 1 56FAD674
+P 1600 2700
+F 0 "U10" H 1850 2500 60  0000 C CNN
+F 1 "TL084_v" H 1950 3000 60  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 1600 2700 60  0001 C CNN
+F 3 "" H 1600 2700 60  0000 C CNN
+	2    1600 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL084_v U10
+U 4 1 56FAD745
+P 1600 1300
+F 0 "U10" H 1850 1100 60  0000 C CNN
+F 1 "TL084_v" H 1950 1600 60  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 1600 1300 60  0001 C CNN
+F 3 "" H 1600 1300 60  0000 C CNN
+	4    1600 1300
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

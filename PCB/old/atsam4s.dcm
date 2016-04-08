@@ -1,0 +1,18 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ATSAM4S
+D Atmel microcontroller
+K Atmel, ATSAM4S, ARM
+$ENDCMP
+#
+$CMP DAC084S085C
+D 8-bit Quad DAC
+K 8-bit Quad Dac
+$ENDCMP
+#
+$CMP TL085CDT
+D Quad Opamp
+K Quad, opamp, operational amplifier
+$ENDCMP
+#
+#End Doc Library
