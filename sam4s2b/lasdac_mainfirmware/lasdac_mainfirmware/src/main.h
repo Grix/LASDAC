@@ -24,6 +24,7 @@ uint16_t newFramePos = 0;				//incoming frame position
 bool newFrameReady = false;				//signals a new frame has been received and is ready to play when the current one ends
 bool playing = false;					//signals a point should be output next systick
 bool syncedStart = true;				//start new frame after current ends (true) or immediately after new frame received (false)
+uint32_t lastErrorCode = 0;				//holds code of last error
 uint32_t outputSpeed = 20000;			//points per second
 uint8_t frame1[MAXFRAMESIZE * 7];		//frame buffer 1
 uint8_t frame2[MAXFRAMESIZE * 7];		//frame buffer 2
