@@ -680,10 +680,10 @@ Wire Wire Line
 Text Label 4400 2450 0    39   ~ 0
 2.5V
 $Comp
-L Mounting_Hole U1
+L Mounting_Hole H1
 U 1 1 56FCCEBD
 P 1650 850
-F 0 "U1" H 1650 1100 60  0001 C CNN
+F 0 "H1" H 1650 1100 60  0001 C CNN
 F 1 "Mounting_Hole" H 1700 1000 60  0001 C CNN
 F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 1700 850 60  0001 C CNN
 F 3 "" H 1700 850 60  0000 C CNN
@@ -691,10 +691,10 @@ F 3 "" H 1700 850 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Mounting_Hole U3
+L Mounting_Hole H3
 U 1 1 56FCD90A
 P 1900 850
-F 0 "U3" H 1900 1100 60  0001 C CNN
+F 0 "H3" H 1900 1100 60  0001 C CNN
 F 1 "Mounting_Hole" H 1950 1000 60  0001 C CNN
 F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 1950 850 60  0001 C CNN
 F 3 "" H 1950 850 60  0000 C CNN
@@ -702,10 +702,10 @@ F 3 "" H 1950 850 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Mounting_Hole U4
+L Mounting_Hole H4
 U 1 1 56FCDA71
 P 1900 1100
-F 0 "U4" H 1900 1350 60  0001 C CNN
+F 0 "H4" H 1900 1350 60  0001 C CNN
 F 1 "Mounting_Hole" H 1950 1250 60  0001 C CNN
 F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 1950 1100 60  0001 C CNN
 F 3 "" H 1950 1100 60  0000 C CNN
@@ -713,10 +713,10 @@ F 3 "" H 1950 1100 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Mounting_Hole U2
+L Mounting_Hole H2
 U 1 1 56FCDBD8
 P 1650 1100
-F 0 "U2" H 1650 1350 60  0001 C CNN
+F 0 "H2" H 1650 1350 60  0001 C CNN
 F 1 "Mounting_Hole" H 1700 1250 60  0001 C CNN
 F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 1700 1100 60  0001 C CNN
 F 3 "" H 1700 1100 60  0000 C CNN
