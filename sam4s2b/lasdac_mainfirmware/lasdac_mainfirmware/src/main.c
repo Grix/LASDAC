@@ -109,7 +109,7 @@ void usb_iso_received()
 	
 	if (processPacket)
 	{
-		uint16_t bytesToCopy = 512 - intraFramePos;
+		uint16_t bytesToCopy = USB_DATAPACKETSIZE - intraFramePos;
 		
 		//if last packet in frame expected
 		if ( (newFrameSize - newFramePos) <= bytesToCopy )
@@ -151,12 +151,13 @@ void usb_iso_received()
 		}
 	}
 	
-	udi_vendor_iso_out_run(usbIsoBufferAddress, 512, usb_iso_received);
+	//udi_vendor_iso_out_run(usbIsoBufferAddress, USB_DATAPACKETSIZE, usb_iso_received);
+	udi_vendor_bulk_out_run(usbIsoBufferAddress, USB_DATAPACKETSIZE, usb_iso_received);
 }
 
 void usb_control_received(void)
 {
-	uint8_t data[4];
+	uint8_t *data = usbControlBufferAddress;
 	//	Byte 0: Command
 	//	Byte 1-3: Data (big endian)
 	
@@ -181,18 +182,6 @@ void usb_control_received(void)
 	{
 		//TODO
 	}
-}
-
-int callback_vendor_enable(void)
-{
-	start();
-	udi_vendor_iso_out_run(usbIsoBufferAddress, 512, usb_iso_received);
-	return 1;
-}
-
-void callback_vendor_disable(void)
-{
-	stop();
 }
 
 int main (void) //entry function
@@ -258,6 +247,8 @@ void statusled_set(bool onoff) //set the statusled on or off
 
 void start(void) //starts and initialized the DAC, must be called before output
 {	
+	//udi_vendor_iso_out_run(usbIsoBufferAddress, USB_DATAPACKETSIZE, usb_iso_received);
+	udi_vendor_bulk_out_run(usbIsoBufferAddress, USB_DATAPACKETSIZE, usb_iso_received);
 	statusled_set(HIGH);
 }
 
@@ -266,4 +257,15 @@ void stop(void) //shuts down the DAC, must be started again before output
 	playing = false;
 	blank_and_center();
 	statusled_set(LOW);
+}
+
+int callback_vendor_enable(void)
+{
+	start();
+	return 1;
+}
+
+void callback_vendor_disable(void)
+{
+	stop();
 }
