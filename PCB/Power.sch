@@ -107,7 +107,7 @@ L R R16
 U 1 1 56EC07CE
 P 2550 5200
 F 0 "R16" V 2630 5200 50  0000 C CNN
-F 1 "330R" V 2550 5200 50  0000 C CNN
+F 1 "150R" V 2550 5200 50  0000 C CNN
 F 2 "Resistors_SMD:R_0805" V 2480 5200 50  0001 C CNN
 F 3 "" H 2550 5200 50  0000 C CNN
 	1    2550 5200
@@ -345,8 +345,8 @@ Wire Wire Line
 Connection ~ 8550 2600
 Text Notes 2200 1750 0    60   ~ 0
 3.3V LDO Regulator\n
-Text Notes 7300 1700 0    60   ~ 0
+Text Notes 7250 1900 0    60   ~ 0
 +-9V SMPS\n
-Text Notes 2200 4700 0    60   ~ 0
+Text Notes 2700 4700 0    60   ~ 0
 2.5V Reference\n
 $EndSCHEMATC
