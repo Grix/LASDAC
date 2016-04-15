@@ -42,7 +42,7 @@ uint8_t usbControlBuffer[USB_CONTROLPACKETSIZE];		//buffer for usb iso transfer
 uint8_t *usbControlBufferAddress = &usbControlBuffer[0];	//pointer to usb iso buffer
 
 //functions
-void usb_iso_received(void);		//called when received an usb iso packet
+void usb_iso_received(udd_ep_status_t, iram_size_t, udd_ep_id_t);		//called when received an usb iso packet
 void usb_control_received(void);	//called when received an usb control/setup packet
 void speed_set(uint32_t speed);		//sets the playback speed in points per second
 void shutter_set(bool onoff);		//sets the shutter level

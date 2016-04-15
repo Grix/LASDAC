@@ -157,10 +157,13 @@
  * becomes.
  */
 #if defined(__CC_ARM)
+#undef __always_inline
 #   define __always_inline   __forceinline
 #elif (defined __GNUC__)
+#undef __always_inline
 #	define __always_inline   inline __attribute__((__always_inline__))
 #elif (defined __ICCARM__)
+#undef __always_inline
 #	define __always_inline   _Pragma("inline=forced")
 #endif
 

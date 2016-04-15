@@ -3,7 +3,7 @@ Lasdac main prosjekt (for SAM4S2B board)
 
 Required Atmel Software Framework modules:
 	DACC - Digital-to-Analog Converter
-	Generic Board Support (ATSAM3X8E)
+	Generic Board Support (ATSAM4S2B)
 	GPIO
 	IOPORT
 	PIO
@@ -61,7 +61,7 @@ void SysTick_Handler(void) //systick timer ISR, called for each point
 		statusled_set(LOW);
 }
 
-void usb_iso_received()
+void usb_iso_received(udd_ep_status_t status, iram_size_t nb_transfered, udd_ep_id_t ep)
 {
 	//	Byte 0-3: First packet control bits (0xAAAAAAAA)
 	//	Byte 4-5: Scanning speed in pps (big endian)
@@ -75,13 +75,13 @@ void usb_iso_received()
 	bool lastPacket = false;
 	uint8_t intraFramePos = 0;
 	
-	if (!newFrameReady)
+	if ((!newFrameReady) && (status == UDD_EP_TRANSFER_OK))
 	{
 		//if control bits indicate first packet in frame
 		if (	(data[0] == 0xAA) &&
-		(data[1] == 0xAA) &&
-		(data[2] == 0xAA) &&
-		(data[3] == 0xAA) )
+				(data[1] == 0xAA) &&
+				(data[2] == 0xAA) &&
+				(data[3] == 0xAA) )
 		{
 			outputSpeed = ( (data[4] << 8) + data[5] );
 			newFrameSize = ( ((data[6] << 8) + data[7]) * 7 + 4);
@@ -130,9 +130,9 @@ void usb_iso_received()
 			uint8_t* frameEnd = newFrameAddress+newFrameSize;
 			
 			if (	( *(frameEnd-0) == 0xBB) &&
-			( *(frameEnd-1) == 0xBB) &&
-			( *(frameEnd-2) == 0xBB) &&
-			( *(frameEnd-3) == 0xBB) )
+					( *(frameEnd-1) == 0xBB) &&
+					( *(frameEnd-2) == 0xBB) &&
+					( *(frameEnd-3) == 0xBB) )
 			{
 				//frame successfully received
 				newFrameReady = true;
