@@ -65,33 +65,22 @@ Text HLabel 6300 3700 2    60   Input ~ 0
 Din
 Text HLabel 6300 3900 2    60   UnSpc ~ 0
 GND
-Text HLabel 4950 3600 0    60   Output ~ 0
+Text HLabel 4950 3900 0    60   Output ~ 0
 R
-Text HLabel 4950 3700 0    60   Output ~ 0
+Text HLabel 4950 3600 0    60   Output ~ 0
 G
-Text HLabel 4950 3800 0    60   Output ~ 0
+Text HLabel 4950 3700 0    60   Output ~ 0
 B
 $Comp
 L C C16
 U 1 1 56B32431
-P 6900 4100
-F 0 "C16" H 6925 4200 50  0000 L CNN
-F 1 "0.1uF" H 6925 4000 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0402" H 6938 3950 50  0001 C CNN
-F 3 "" H 6900 4100 50  0000 C CNN
-	1    6900 4100
-	1    0    0    -1  
-$EndComp
-$Comp
-L GND #PWR025
-U 1 1 56B32486
-P 6900 4350
-F 0 "#PWR025" H 6900 4100 50  0001 C CNN
-F 1 "GND" H 6900 4200 50  0000 C CNN
-F 2 "" H 6900 4350 50  0000 C CNN
-F 3 "" H 6900 4350 50  0000 C CNN
-	1    6900 4350
-	1    0    0    -1  
+P 5000 3200
+F 0 "C16" H 5025 3300 50  0000 L CNN
+F 1 "0.1uF" H 5025 3100 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" H 5038 3050 50  0001 C CNN
+F 3 "" H 5000 3200 50  0000 C CNN
+	1    5000 3200
+	-1   0    0    1   
 $EndComp
 Text HLabel 7050 3800 2    60   UnSpc ~ 0
 2.5V
@@ -114,29 +103,13 @@ Wire Wire Line
 Wire Wire Line
 	6200 3800 7050 3800
 Wire Wire Line
-	6900 3800 6900 3950
-Wire Wire Line
-	6900 4350 6900 4250
-Connection ~ 6900 3800
-$Comp
-L CP1 CP1
-U 1 1 56B4306D
-P 5000 3200
-F 0 "CP1" H 5025 3300 50  0000 L CNN
-F 1 "10uF" H 5025 3100 50  0000 L CNN
-F 2 "Capacitors_Tantalum_SMD:TantalC_SizeA_EIA-3216_HandSoldering" H 5000 3200 50  0001 C CNN
-F 3 "" H 5000 3200 50  0000 C CNN
-	1    5000 3200
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
 	5000 3350 5000 3500
 Connection ~ 5000 3500
 $Comp
-L GND #PWR026
+L GND #PWR025
 U 1 1 56B430BD
 P 5000 2850
-F 0 "#PWR026" H 5000 2600 50  0001 C CNN
+F 0 "#PWR025" H 5000 2600 50  0001 C CNN
 F 1 "GND" H 5000 2700 50  0000 C CNN
 F 2 "" H 5000 2850 50  0000 C CNN
 F 3 "" H 5000 2850 50  0000 C CNN
@@ -147,9 +120,7 @@ Wire Wire Line
 	5000 2850 5000 3050
 Text Notes 4750 3300 2    60   ~ 0
 CP1 should be a tantalum cap\n\n
-Text Notes 7850 4150 2    60   ~ 0
-Low ESR low ESL\n
-Text HLabel 4950 3900 0    60   Output ~ 0
+Text HLabel 4950 3800 0    60   Output ~ 0
 Intensity
 Wire Wire Line
 	4950 3900 5050 3900

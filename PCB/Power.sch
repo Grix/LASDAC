@@ -70,17 +70,6 @@ F 3 "" H 1950 2550 50  0000 C CNN
 	1    1950 2550
 	1    0    0    -1  
 $EndComp
-$Comp
-L C C2
-U 1 1 56B1F1C7
-P 3400 2600
-F 0 "C2" H 3425 2700 50  0000 L CNN
-F 1 "4.7uF" H 3425 2500 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603" H 3438 2450 50  0001 C CNN
-F 3 "" H 3400 2600 50  0000 C CNN
-	1    3400 2600
-	1    0    0    -1  
-$EndComp
 Text HLabel 3750 2250 2    60   UnSpc ~ 0
 3.3V
 Wire Wire Line
@@ -349,4 +338,15 @@ Text Notes 7250 1900 0    60   ~ 0
 +-9V SMPS\n
 Text Notes 2700 4700 0    60   ~ 0
 2.5V Reference\n
+$Comp
+L CP1 C2
+U 1 1 5713A8EC
+P 3400 2600
+F 0 "C2" H 3425 2700 50  0000 L CNN
+F 1 "10uF" H 3425 2500 50  0000 L CNN
+F 2 "" H 3400 2600 50  0000 C CNN
+F 3 "" H 3400 2600 50  0000 C CNN
+	1    3400 2600
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
