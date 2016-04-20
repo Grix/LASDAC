@@ -1,0 +1,17 @@
+﻿Build started 2016-04-20 21:39.07.
+     1>Project "D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest\gitle_usbtest.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\gitle_usbtest.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\gitle_usbtest.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt gitle_usbtest.cpp
+         Skipping... (no relevant changes detected)
+         gitle_usbtest.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Debug\gitle_usbtest.exe" /INCREMENTAL /NOLOGO "libusb-1.0.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Debug\gitle_usbtest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Debug\gitle_usbtest.lib" /MACHINE:X86 Debug\gitle_usbtest.obj
+         Debug\stdafx.obj
+         gitle_usbtest.vcxproj -> D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Debug\gitle_usbtest.exe
+     1>Done Building Project "D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest\gitle_usbtest.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.48
