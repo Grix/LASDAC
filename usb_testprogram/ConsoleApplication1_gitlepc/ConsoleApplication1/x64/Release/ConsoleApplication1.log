@@ -1,0 +1,44 @@
+﻿Build started 2016-04-20 15:59:41.
+     1>Project "C:\GitHub\LASDAC\usb_testprogram\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /IC:\GitHub\LASDAC\usb_testprogram\ConsoleApplication1\ConsoleApplication1 /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt ConsoleApplication1.cpp stdafx.cpp
+         ConsoleApplication1.cpp
+     1>c:\github\lasdac\usb_testprogram\consoleapplication1\consoleapplication1\libusb.h(738): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>c:\github\lasdac\usb_testprogram\consoleapplication1\consoleapplication1\libusb.h(769): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>c:\github\lasdac\usb_testprogram\consoleapplication1\consoleapplication1\libusb.h(1262): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>ConsoleApplication1.cpp(20): warning C4018: '<' : signed/unsigned mismatch
+     1>ConsoleApplication1.cpp(33): warning C4018: '<' : signed/unsigned mismatch
+     1>ConsoleApplication1.cpp(121): warning C4101: 'rc' : unreferenced local variable
+         stdafx.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\GitHub\LASDAC\usb_testprogram\ConsoleApplication1\x64\Release\ConsoleApplication1.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\GitHub\LASDAC\usb_testprogram\ConsoleApplication1\x64\Release\ConsoleApplication1.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\GitHub\LASDAC\usb_testprogram\ConsoleApplication1\x64\Release\ConsoleApplication1.lib" /MACHINE:X64 x64\Release\ConsoleApplication1.obj
+         x64\Release\stdafx.obj
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_error_name
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_claim_interface
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_get_bus_number
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_exit
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_bulk_transfer
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_init
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_open_device_with_vid_pid
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_get_device_address
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_get_device_descriptor
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_get_config_descriptor
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_close
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_get_max_iso_packet_size
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_free_device_list
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_free_config_descriptor
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_set_interface_alt_setting
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_get_device_list
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_release_interface
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_get_port_numbers
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_set_debug
+     1>ConsoleApplication1.obj : error LNK2001: unresolved external symbol libusb_get_device_speed
+     1>C:\GitHub\LASDAC\usb_testprogram\ConsoleApplication1\x64\Release\ConsoleApplication1.exe : fatal error LNK1120: 20 unresolved externals
+     1>Done Building Project "C:\GitHub\LASDAC\usb_testprogram\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.40
