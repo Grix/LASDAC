@@ -38,8 +38,45 @@ int _tmain(int argc, _TCHAR* argv[])
 		getchar();
 		return r;
 	}
-	
 
+	r = libusb_set_interface_alt_setting(devh, 0, 1); //bytter alternativ interface setting til ett med endpoint
+	if (r < 0) 
+	{
+		printf("failed to set alternate interface\n");
+		printf("%s\n", libusb_error_name(r));
+		return r;
+	}
+
+	while (1)
+	{
+		uint8_t buffer[17500];
+		uint8_t buffer_in[17500];
+		buffer[15880] = 100;
+		int actual_length = 0;
+
+		r = libusb_bulk_transfer(devh, 0x06, &buffer[0], 17500, &actual_length, 32); //out
+		if ((r != 0) && (actual_length != 17500))
+		{
+			printf("error sending\n");
+			printf("%s\n", libusb_error_name(r));
+			getchar();
+			return r;
+		}
+
+		r = libusb_bulk_transfer(devh, 0x85, &buffer_in[0], 17500, &actual_length, 32); //in
+		if ((r != 0) && (actual_length != 17500))
+		{
+			printf("error receiving\n");
+			printf("%s\n", libusb_error_name(r));
+			getchar();
+			return r;
+		}
+
+		printf("Received: %d \n\n", buffer_in[15880]);
+		char q = getchar();
+		if (q == 'q')
+			break;
+	}
 
 	return 1;
 }

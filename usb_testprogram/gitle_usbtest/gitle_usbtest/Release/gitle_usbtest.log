@@ -1,8 +1,6 @@
-﻿Build started 2016-04-20 21:37.56.
+﻿Build started 2016-04-21 12:47.56.
      1>Project "D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest\gitle_usbtest.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\gitle_usbtest.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
-         stdafx.cpp
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\gitle_usbtest.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt gitle_usbtest.cpp
          gitle_usbtest.cpp
      1>d:\github\lasdac\usb_testprogram\gitle_usbtest\gitle_usbtest\libusb.h(738): warning C4200: nonstandard extension used : zero-sized array in struct/union
@@ -14,14 +12,11 @@
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Release\gitle_usbtest.exe" /INCREMENTAL:NO /NOLOGO "libusb-1.0.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Release\gitle_usbtest.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Release\gitle_usbtest.lib" /MACHINE:X86 /SAFESEH Release\gitle_usbtest.obj
          Release\stdafx.obj
-     1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-     1>gitle_usbtest.obj : error LNK2001: unresolved external symbol "private: static int std::locale::id::_Id_cnt" (?_Id_cnt@id@locale@std@@0HA)
-     1>gitle_usbtest.obj : error LNK2001: unresolved external symbol "__int64 const std::_BADOFF" (?_BADOFF@std@@3_JB)
-     1>gitle_usbtest.obj : error LNK2001: unresolved external symbol "public: static class std::locale::id std::ctype<char>::id" (?id@?$ctype@D@std@@2V0locale@2@A)
-     1>gitle_usbtest.obj : error LNK2001: unresolved external symbol "public: static class std::locale::id std::ctype<wchar_t>::id" (?id@?$ctype@_W@std@@2V0locale@2@A)
-     1>D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Release\gitle_usbtest.exe : fatal error LNK1120: 4 unresolved externals
-     1>Done Building Project "D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest\gitle_usbtest.vcxproj" (Build target(s)) -- FAILED.
+         Generating code
+         Finished generating code
+         gitle_usbtest.vcxproj -> D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Release\gitle_usbtest.exe
+     1>Done Building Project "D:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest\gitle_usbtest.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.71
+Time Elapsed 00:00:00.72
