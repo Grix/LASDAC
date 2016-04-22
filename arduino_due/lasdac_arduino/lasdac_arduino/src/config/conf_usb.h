@@ -122,11 +122,11 @@
 //! Interface callback definition
 //#define UDI_VENDOR_ENABLE_EXT()          true
 //#define UDI_VENDOR_DISABLE_EXT()
-//#define UDI_VENDOR_SETUP_OUT_RECEIVED()  false
-//#define UDI_VENDOR_SETUP_IN_RECEIVED()   false
+#define UDI_VENDOR_SETUP_OUT_RECEIVED()  false
+#define UDI_VENDOR_SETUP_IN_RECEIVED()   false
 
 #define UDI_VENDOR_ENABLE_EXT() callback_vendor_enable()
-extern void callback_vendor_enable(void);
+extern int callback_vendor_enable(void);
 #define UDI_VENDOR_DISABLE_EXT() callback_vendor_disable()
 extern void callback_vendor_disable(void);
 //
