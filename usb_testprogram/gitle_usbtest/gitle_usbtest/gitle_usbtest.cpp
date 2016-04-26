@@ -7,6 +7,25 @@
 
 static struct libusb_device_handle *devh = NULL;
 
+struct Point
+{
+	UINT16 X;
+	UINT16 Y;
+	UINT8  R;
+	UINT8  G;
+	UINT8  B;
+	UINT8  I;
+};
+
+Point frameOn[2] = {
+	{ 0xffff, 0xffff, 0xff, 0xff, 0xff, 0xff },
+	{ 20000, 0, 0, 0, 0, 0 }
+};
+Point frameOff[2] = {
+	{ 0, 0, 0, 0, 0, 0 },
+	{ 20000, 0, 0, 0, 0, 0 }
+};
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int r; //various return codes
@@ -49,13 +68,14 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	while (1)
 	{
-		uint8_t buffer[17500];
-		uint8_t buffer_in[17500];
-		buffer[15880] = 100;
+		uint8_t buffer_in[16];
+		/*uint8_t buffer[16];
+		buffer[15880] = 100;*/
 		int actual_length = 0;
+		char q;
 
-		r = libusb_bulk_transfer(devh, 0x06, &buffer[0], 17500, &actual_length, 32); //out
-		if ((r != 0) && (actual_length != 17500))
+		r = libusb_bulk_transfer(devh, 0x06, (uint8_t*)&frameOn[0], 16, &actual_length, 32); //out
+		if ((r != 0) && (actual_length != 16))
 		{
 			printf("error sending\n");
 			printf("%s\n", libusb_error_name(r));
@@ -63,20 +83,37 @@ int _tmain(int argc, _TCHAR* argv[])
 			return r;
 		}
 
-		r = libusb_bulk_transfer(devh, 0x85, &buffer_in[0], 17500, &actual_length, 32); //in
-		if ((r != 0) && (actual_length != 17500))
+		//r = libusb_bulk_transfer(devh, 0x85, &buffer_in[0], 16, &actual_length, 32); //in
+		//if ((r != 0) && (actual_length != 16))
+		//{
+		//	printf("error receiving\n");
+		//	printf("%s\n", libusb_error_name(r));
+		//	getchar();
+		//	return r;
+		//}
+
+		//printf("Received: %d \n\n", buffer_in[15880]);
+		printf("On");
+		q = getchar();
+		if (q == 'q')
+			break;
+
+		r = libusb_bulk_transfer(devh, 0x06, (uint8_t*)&frameOff[0], 16, &actual_length, 32); //out
+		if ((r != 0) && (actual_length != 16))
 		{
-			printf("error receiving\n");
+			printf("error sending\n");
 			printf("%s\n", libusb_error_name(r));
 			getchar();
 			return r;
 		}
 
-		printf("Received: %d \n\n", buffer_in[15880]);
-		char q = getchar();
+		printf("Off");
+		q = getchar();
 		if (q == 'q')
 			break;
+
 	}
+
 
 	return 1;
 }

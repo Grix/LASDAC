@@ -1,9 +1,23 @@
-﻿Build started 2016-04-22 14:34:38.
+﻿Build started 2016-04-26 15:23:53.
      1>Project "C:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest\gitle_usbtest.vcxproj" on node 2 (Build target(s)).
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\gitle_usbtest.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt gitle_usbtest.cpp
+         gitle_usbtest.cpp
+     1>c:\github\lasdac\usb_testprogram\gitle_usbtest\gitle_usbtest\libusb.h(738): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>c:\github\lasdac\usb_testprogram\gitle_usbtest\gitle_usbtest\libusb.h(769): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>c:\github\lasdac\usb_testprogram\gitle_usbtest\gitle_usbtest\libusb.h(1262): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>gitle_usbtest.cpp(71): warning C4101: 'buffer_in' : unreferenced local variable
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Release\gitle_usbtest.exe" /INCREMENTAL:NO /NOLOGO "libusb-1.0.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Release\gitle_usbtest.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Release\gitle_usbtest.lib" /MACHINE:X86 /SAFESEH Release\gitle_usbtest.obj
+         Release\stdafx.obj
+         Generating code
+         Finished generating code
          gitle_usbtest.vcxproj -> C:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\Release\gitle_usbtest.exe
      1>Done Building Project "C:\GitHub\LASDAC\usb_testprogram\gitle_usbtest\gitle_usbtest\gitle_usbtest.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.05
+Time Elapsed 00:00:01.71
