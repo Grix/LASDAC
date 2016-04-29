@@ -33,12 +33,10 @@ void speed_set(uint32_t speed);
 void shutter_set(bool level);
 void statusled_set(bool level);
 void errorled_set(bool level);
-void point_output();
+void point_output(void);
 void blank_and_center(void);
-void start(void);
-void stop(void);
 void usb_bulk_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id_t ep);
-
+void usb_interrupt_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id_t ep);
 
 typedef struct{
 	uint16_t X;
@@ -61,14 +59,16 @@ uint16_t newFrameSize = 0;				//incoming frame total size in points
 bool newFrameReady = false;				//signals a new frame has been received and is ready to play when the current one ends
 bool playing = false;					//signals a point should be output next systick
 uint32_t outputSpeed = 20000;			//points per second
+bool repeat = true;						//signals that current frame should be repeated until new one is received
+bool newRepeat = true;					//repeat info for next frame
 
-Point frame1[MAXFRAMESIZE];		//frame buffer 1
-Point frame2[MAXFRAMESIZE];		//frame buffer 2
-Point frame3[MAXFRAMESIZE];		//frame buffer 3
+Point frame1[MAXFRAMESIZE];					//frame buffer 1
+Point frame2[MAXFRAMESIZE];					//frame buffer 2
+Point frame3[MAXFRAMESIZE];					//frame buffer 3
 Point* frameAddress = &frame1[0];			//pointer to frame currently being played
 Point* newFrameAddress = &frame2[0];		//pointer to pending frame waiting to be played
 Point* usbBulkBufferAddress = &frame3[0];	//pointer to usb bulk transfer buffer
-uint8_t usbInterruptBuffer[4];
+ControlPacket usbInterruptBuffer[1];
 ControlPacket* usbInterruptBufferAddress = &usbInterruptBuffer[0];	//pointer to usb interrupt buffer
 
 void SysTick_Handler(void) //systick timer ISR
@@ -89,6 +89,7 @@ void SysTick_Handler(void) //systick timer ISR
 					newFrameReady = false;
 					framePos = 0;
 					frameSize = newFrameSize;
+					repeat = newRepeat;
 				cpu_irq_leave_critical();
 				point_output();
 				framePos++;
@@ -96,10 +97,21 @@ void SysTick_Handler(void) //systick timer ISR
 			}
 			else
 			{
-				//loop frame
-				framePos = 0;
-				point_output();
-				framePos++;
+				if (repeat)
+				{
+					//loop frame
+					framePos = 0;
+					point_output();
+					framePos++;
+				}
+				else
+				{
+					framePos = 0;
+					playing = false;
+					blank_and_center();
+					statusled_set(LOW);
+				}
+				
 			}
 		}
 		else
@@ -119,77 +131,82 @@ void usb_bulk_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id
 	if ( (!newFrameReady) && (status == UDD_EP_TRANSFER_OK) )
 	{
 		uint16_t numOfPoints = (uint16_t)((length)/8 + 0.5) - 1; //rounding in case of decimal errors
+		uint16_t numOfPoints2 = usbBulkBufferAddress[numOfPoints].Y;
 		
-		//reading control struct (last point transfered)
-		uint8_t flags = usbBulkBufferAddress[numOfPoints].R;
-		outputSpeed = usbBulkBufferAddress[numOfPoints].X;
-		
-		cpu_irq_enter_critical();
-			if ( (!playing) || (flags & 1) )
-			{
-				Point* previousFrameAddress = frameAddress;
-				frameAddress = usbBulkBufferAddress;
-				usbBulkBufferAddress = previousFrameAddress;
-				framePos = 0;
-				frameSize = numOfPoints;
-				newFrameReady = false;
-				playing = true;
-				speed_set(outputSpeed);
-			} 
-			else
-			{
-				Point* previousNewFrameAddress = newFrameAddress;
-				newFrameAddress = usbBulkBufferAddress;
-				usbBulkBufferAddress = previousNewFrameAddress;	
-				newFrameSize = numOfPoints;
-				newFrameReady = true;
-			}
-		cpu_irq_leave_critical();
+		if (numOfPoints == numOfPoints2) //sanity check, skip frame if conflicting frame size information
+		{
+			uint8_t flags = usbBulkBufferAddress[numOfPoints].R;
+			newRepeat = (flags & (1 << 1));
+			outputSpeed = usbBulkBufferAddress[numOfPoints].X;
+			
+			cpu_irq_enter_critical();
+				if ( (!playing) || (flags & (1 << 0)) ) //if frame is to start playing immediately
+				{
+					Point* previousFrameAddress = frameAddress;
+					frameAddress = usbBulkBufferAddress;
+					usbBulkBufferAddress = previousFrameAddress;
+					framePos = 0;
+					frameSize = numOfPoints;
+					newFrameReady = false;
+					playing = true;
+					repeat = newRepeat;
+					speed_set(outputSpeed);
+				} 
+				else
+				{
+					Point* previousNewFrameAddress = newFrameAddress;
+					newFrameAddress = usbBulkBufferAddress;
+					usbBulkBufferAddress = previousNewFrameAddress;	
+					newFrameSize = numOfPoints;
+					newFrameReady = true;
+				}
+			cpu_irq_leave_critical();
+		}
 	}
 	
 	
 	udi_vendor_bulk_out_run((uint8_t*)usbBulkBufferAddress, BUFFERSIZE, usb_bulk_out_callback);
 }
 
-void usb_control_placeholder(void)
+void usb_interrupt_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id_t ep)
 {
-	uint8_t data[4];
-	//	Byte 0: Command
-	//	Byte 1-3: Data (big endian)
+	UNUSED(ep);
+	if ( (status == UDD_EP_TRANSFER_OK) && (length == 3) )
+	{
+		ControlPacket packet = usbInterruptBufferAddress[0];	
+		if (packet.command == 0x01)			//STOP
+		{
+			playing = false;
+			framePos = 0;
+			statusled_set(LOW);
+			blank_and_center();
+		}
+		else if (packet.command == 0x02)	//SHUTTER
+		{
+			shutter_set(packet.data);
+		}
+		else if (packet.command == 0x03)	//STATUS_REQUEST
+		{
+			//TODO
+		}
+	}
 	
-	if (data[0] == 0x01)		//STOP
-	{
-		playing = false;
-		statusled_set(LOW);
-	}
-	else if (data[0] == 0x02)	//SHUTTER
-	{
-		
-		if (data[3] == 0)
-			shutter_set(LOW);
-		else
-			shutter_set(HIGH);
-	}
-	else if (data[0] == 0x03)	//STATUS_REQUEST
-	{
-		//TODO
-	}
-	else if (data[0] == 0x04)	//CLOSE
-	{
-		//TODO
-	}
+	udi_vendor_interrupt_out_run((uint8_t*)usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
 }
 
 int callback_vendor_enable(void)
 {
-	start();
 	udi_vendor_bulk_out_run((uint8_t*)usbBulkBufferAddress, BUFFERSIZE, usb_bulk_out_callback);
+	udi_vendor_interrupt_out_run((uint8_t*)usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
 	return 1;
 }
 
 void callback_vendor_disable(void)
 {
-	stop();
+	playing = false;
+	framePos = 0;
+	blank_and_center();
+	statusled_set(LOW);
 }
 
 int main (void) //entry function
@@ -216,7 +233,7 @@ int main (void) //entry function
 	speed_set(50000);*/
 }
 
-void point_output() //sends point data to the DACs, data is point number "framePos" in buffer "frameAddress".
+void point_output(void) //sends point data to the DACs, data is point number "framePos" in buffer "frameAddress".
 {	
 	Point currentPoint = frameAddress[framePos];
 	
@@ -302,7 +319,7 @@ void spi_init(void) //setup SPI for DAC084S085
 	spi_set_clock_polarity(SPI0, 0, 0);
 	spi_set_clock_phase(SPI0, 0, 0);
 	spi_set_bits_per_transfer(SPI0, 0, SPI_CSR_BITS_16_BIT);
-	spi_set_baudrate_div(SPI0, 0, (sysclk_get_cpu_hz() / 20000000) + 1 ); //default for dac: 30000000
+	spi_set_baudrate_div(SPI0, 0, (sysclk_get_cpu_hz() / 10000000) + 1 ); //max for dac: 30000000
 	spi_set_transfer_delay(SPI0, 0, 0, 0);
 	spi_enable(SPI0);
 }
@@ -314,16 +331,4 @@ void dac_init(void) //setup sam internal DAC controller
 	dacc_enable_channel(DACC, 0);
 	dacc_enable_channel(DACC, 1);
 	dacc_set_transfer_mode(DACC, 0);
-}
-
-void start(void) //starts and initialized the DAC, must be called before output
-{	
-	statusled_set(HIGH);
-}
-
-void stop(void) //shuts down the DAC, must be started again before output
-{
-	playing = false;
-	blank_and_center();
-	statusled_set(LOW);
 }
