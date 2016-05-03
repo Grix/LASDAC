@@ -63,9 +63,9 @@ int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, Point * punkte
 	int actual_transfer = 0;
 	int r_value = 0;
 
-	punkter[nr_points] = { speed,0,flags,0,0,0 };
+	punkter[nr_points] = { speed,nr_points,flags,0,0,0 };
 
-	r_value = libusb_bulk_transfer(devh, ep_bulk_out, (uint8_t*)(punkter), sizeof(punkter), &actual_transfer, 0);
+	r_value = libusb_bulk_transfer(devh, ep_bulk_out, (uint8_t*)(punkter), sizeof(punkter), &actual_transfer, 32);
 	if (r_value == 0 && actual_transfer == sizeof((uint8_t*)(punkter)))
 	{
 		return 0;
