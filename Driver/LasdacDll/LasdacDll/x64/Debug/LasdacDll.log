@@ -1,0 +1,9 @@
+﻿  LasdacDll.cpp
+c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(738): warning C4200: nonstandard extension used: zero-sized array in struct/union
+  c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(738): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(769): warning C4200: nonstandard extension used: zero-sized array in struct/union
+  c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(769): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(1262): warning C4200: nonstandard extension used: zero-sized array in struct/union
+  c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(1262): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     Creating library C:\Users\BG\Documents\Visual Studio 2015\Projects\LasdacDll\x64\Debug\LasdacDll.lib and object C:\Users\BG\Documents\Visual Studio 2015\Projects\LasdacDll\x64\Debug\LasdacDll.exp
+  LasdacDll.vcxproj -> C:\Users\BG\Documents\Visual Studio 2015\Projects\LasdacDll\x64\Debug\LasdacDll.dll
