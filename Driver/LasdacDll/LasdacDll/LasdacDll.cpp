@@ -8,7 +8,7 @@
 
 using namespace std;
 static struct libusb_device_handle *devh = NULL;
-#define ep_bulk_out	0x04
+#define ep_bulk_out	0x06
 
 /*
 namespace LasdacFuncs
