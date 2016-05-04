@@ -35,5 +35,8 @@
     <ClCompile Include="gitle_usbtest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lasdacdll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
