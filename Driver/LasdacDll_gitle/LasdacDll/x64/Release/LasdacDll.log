@@ -1,0 +1,18 @@
+﻿  LasdacDll.cpp
+c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(738): warning C4200: nonstandard extension used: zero-sized array in struct/union
+  c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(738): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(769): warning C4200: nonstandard extension used: zero-sized array in struct/union
+  c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(769): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(1262): warning C4200: nonstandard extension used: zero-sized array in struct/union
+  c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\libusb.h(1262): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\LasdacDll.h(10): warning C4005: 'LASDACDLL_API': macro redefinition
+  c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\LasdacDll.h(9): note: see previous definition of 'LASDACDLL_API'
+c:\users\bg\documents\visual studio 2015\projects\lasdacdll\lasdacdll\LasdacDll.h(23): warning C4091: '__declspec(dllexport)': ignored on left of 'Point' when no variable is declared
+     Creating library C:\Users\BG\Documents\Visual Studio 2015\Projects\LasdacDLL\x64\Release\LasdacDll.lib and object C:\Users\BG\Documents\Visual Studio 2015\Projects\LasdacDLL\x64\Release\LasdacDll.exp
+LINK : warning LNK4098: defaultlib 'LIBCMTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  4 of 9 functions (44.4%) were compiled, the rest were copied from previous compilation.
+  Finished generating code
+    4 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  LasdacDll.vcxproj -> C:\Users\BG\Documents\Visual Studio 2015\Projects\LasdacDLL\x64\Release\LasdacDll.dll

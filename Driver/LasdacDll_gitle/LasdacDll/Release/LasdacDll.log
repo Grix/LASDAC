@@ -1,0 +1,26 @@
+﻿Build started 2016-05-05 17:35:34.
+     1>Project "C:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll\LasdacDll.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D LASDACDLL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt LasdacDll.cpp
+         LasdacDll.cpp
+     1>c:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\libusb.h(738): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>c:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\libusb.h(769): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>c:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\libusb.h(1262): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>c:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\LasdacDll.h(10): warning C4005: 'LASDACDLL_API' : macro redefinition
+                 c:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\LasdacDll.h(9) : see previous definition of 'LASDACDLL_API'
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\GitHub\LASDAC\Driver\LasdacDll_gitle\Release\LasdacDll.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll "libusb-1.0.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\GitHub\LASDAC\Driver\LasdacDll_gitle\Release\LasdacDll.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\GitHub\LASDAC\Driver\LasdacDll_gitle\Release\LasdacDll.lib" /MACHINE:X86 /SAFESEH /DLL Release\dllmain.obj
+         Release\LasdacDll.obj
+         Release\stdafx.obj
+            Creating library C:\GitHub\LASDAC\Driver\LasdacDll_gitle\Release\LasdacDll.lib and object C:\GitHub\LASDAC\Driver\LasdacDll_gitle\Release\LasdacDll.exp
+         Generating code
+         Finished generating code
+         LasdacDll.vcxproj -> C:\GitHub\LASDAC\Driver\LasdacDll_gitle\Release\LasdacDll.dll
+     1>Done Building Project "C:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll\LasdacDll.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.88

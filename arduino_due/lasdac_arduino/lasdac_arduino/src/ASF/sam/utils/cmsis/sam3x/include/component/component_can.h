@@ -92,7 +92,7 @@ typedef struct {
 #define CAN_MR_TEOF (0x1u << 4) /**< \brief (CAN_MR) Timestamp messages at each end of Frame */
 #define CAN_MR_TTM (0x1u << 5) /**< \brief (CAN_MR) Disable/Enable Time Triggered Mode */
 #define CAN_MR_TIMFRZ (0x1u << 6) /**< \brief (CAN_MR) Enable Timer Freeze */
-#define CAN_MR_DRPT (0x1u << 7) /**< \brief (CAN_MR) Disable Repeat */
+#define CAN_MR_DRPT (0x1u << 7) /**< \brief (CAN_MR) Disable notRepeat */
 #define CAN_MR_RXSYNC_Pos 24
 #define CAN_MR_RXSYNC_Msk (0x7u << CAN_MR_RXSYNC_Pos) /**< \brief (CAN_MR) Reception Synchronization Stage (not readable) */
 #define   CAN_MR_RXSYNC_DOUBLE_PP (0x0u << 24) /**< \brief (CAN_MR) Rx Signal with Double Synchro Stages (2 Positive Edges) */

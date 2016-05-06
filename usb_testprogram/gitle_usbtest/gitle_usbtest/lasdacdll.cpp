@@ -10,6 +10,8 @@ static struct libusb_device_handle *devh = NULL;
 #define ep_bulk_out	0x06
 #define DLLEXPORT extern "C" __declspec(dllexport)
 
+DLLEXPORT int open_device(void);
+
 
 typedef struct
 {
@@ -86,7 +88,7 @@ DLLEXPORT int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, Poin
 }
 
 
-DLLEXPORT int open_device() {
+DLLEXPORT int open_device(void) {
 	int r = 0;
 	r = libusb_init(NULL);
 	if (r < 0) { return -1; }
@@ -108,14 +110,14 @@ DLLEXPORT int open_device() {
 }
 
 
-DLLEXPORT int close_device() {
+DLLEXPORT int close_device(void) {
 	libusb_close(devh);
 	libusb_exit(NULL);
 	return 0;
 }
 
 
-DLLEXPORT void print_test2() {
+DLLEXPORT void print_test2(void) {
 	printf("test");
 	getchar();
 	return;

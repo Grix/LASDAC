@@ -62,7 +62,7 @@
 #define  USB_DEVICE_MAJOR_VERSION         1
 #define  USB_DEVICE_MINOR_VERSION         0
 #define  USB_DEVICE_POWER                 300 // Consumption on VBUS line (mA)
-#define  USB_DEVICE_ATTR                  (USB_CONFIG_ATTR_BUS_POWERED)
+#define  USB_DEVICE_ATTR                  (USB_CONFIG_ATTR_BUS_POWERED) 
 //	(USB_CONFIG_ATTR_SELF_POWERED)
 
 //	(USB_CONFIG_ATTR_REMOTE_WAKEUP|USB_CONFIG_ATTR_SELF_POWERED)
@@ -136,20 +136,14 @@ extern void callback_vendor_disable(void);
 //extern void vendor_setup_in_received(void);
 
 
-//! endpoints size for full speed
+//! endpoints size
 //! Note: Disable the endpoints of a type, if size equal 0
-#define UDI_VENDOR_EPS_SIZE_INT_FS    64
-#define UDI_VENDOR_EPS_SIZE_BULK_FS   64
-#if SAMG55
-#define UDI_VENDOR_EPS_SIZE_ISO_FS   0
-#else
-#define UDI_VENDOR_EPS_SIZE_ISO_FS   512
-#endif
-
-//! endpoints size for high speed
-#define UDI_VENDOR_EPS_SIZE_INT_HS    64
-#define UDI_VENDOR_EPS_SIZE_BULK_HS  512
-#define UDI_VENDOR_EPS_SIZE_ISO_HS    64
+#define  UDI_VENDOR_EPS_SIZE_INT_FS    64
+#define  UDI_VENDOR_EPS_SIZE_BULK_FS   64
+#define  UDI_VENDOR_EPS_SIZE_ISO_FS   256
+#define  UDI_VENDOR_EPS_SIZE_INT_HS    64
+#define  UDI_VENDOR_EPS_SIZE_BULK_HS  512
+#define  UDI_VENDOR_EPS_SIZE_ISO_HS    64
 
 //@}
 
