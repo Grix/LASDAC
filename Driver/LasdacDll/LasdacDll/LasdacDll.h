@@ -7,7 +7,7 @@
 
 #ifdef LASDACDLL_EXPORTS
 #define LASDACDLL_API __declspec(dllexport)
-#define LASDACDLL_API extern "C" __declspec (dllexport)
+//#define LASDACDLL_API extern "C" __declspec (dllexport)
 #else
 #define LASDACDLL_API __declspec(dllimport) 
 #endif
