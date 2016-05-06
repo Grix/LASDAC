@@ -17,10 +17,10 @@ int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, uint8_t * punk
 	static int count = 0;
 	int actual_transfer = 0;
 	int r_value = 0;
-	int speedmsb = (speed & 0xff00);
-	int speedlsb = (speed & 0x00ff);
-	int nr_pointmsb = (nr_points & 0xff00);
-	int nr_pointlsb = (nr_points & 0xff00);
+	uint8_t speedmsb = ((speed >> 8) & 0xff);
+	uint8_t speedlsb = (speed & 0x00ff);
+	uint8_t nr_pointmsb = ((nr_points >> 8) & 0xff);
+	uint8_t nr_pointlsb = (nr_points & 0x00ff);
 
 	punkter[(nr_points * 8)] = speedlsb;
 	punkter[((nr_points * 8))+1] = speedmsb;
@@ -73,13 +73,13 @@ void print_test2() {
 	return;
 }
 
-/*int read_frame(Point * punkter) {
+int read_frame(uint16_t nr_points) {
 int r_value = 0;
 int actual_transfer;
-uint8_t* buffer = new uint8_t[sizeof(punkter)];
+uint8_t* buffer = new uint8_t[sizeof(nr_points)];
 
-r_value = libusb_bulk_transfer(devh, ep_bulk_inn, buffer, sizeof(punkter), &actual_transfer, 0);
-if (r_value == 0 && actual_transfer == sizeof(punkter))
+r_value = libusb_bulk_transfer(devh, ep_bulk_inn, buffer, sizeof(nr_points), &actual_transfer, 0);
+if (r_value == 0 && actual_transfer == sizeof(nr_points))
 {
 for (int i = 0; i < 8; i++)
 printf("%x ", buffer[i]);
@@ -92,4 +92,4 @@ delete[] buffer;
 return -1;
 }
 
-}*/
+}
