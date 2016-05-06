@@ -9,86 +9,55 @@
 using namespace std;
 static struct libusb_device_handle *devh = NULL;
 #define ep_bulk_out	0x06
-
-/*
-namespace LasdacFuncs
-{
-	
-	void MyLasdacFuncs::open_device() {
-		libusb_init(NULL);
-		devh = libusb_open_device_with_vid_pid(NULL, 0x03eb, 0x2423);
-	}
-	void MyLasdacFuncs::close_device() {
-		libusb_close(devh);
-		libusb_exit(NULL);
-	}
+#define ep_bulk_inn 0x85
 
 
-	void MyLasdacFuncs::send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, Point * punkter){
-		
-		static int count = 0;
-		int actual_transfer = 0;
-		int r_value = 0;
-		uint8_t speed_8msb = 0;
-		uint8_t speed_8lsb = 0;
-		Point* punkt_buffer = new Point[nr_points + 1];
-
-		if (count < nr_points) {
-			punkt_buffer[count] = *punkter;
-			count++;
-		}
-		else
-			punkt_buffer[count + 1] = { speed,0,0,0,flags,0 };
-		r_value = libusb_bulk_transfer(devh, ep_bulk_out, (uint8_t*)(punkt_buffer), sizeof(punkt_buffer), &actual_transfer, 0);
-		if (r_value == 0 && actual_transfer == sizeof((uint8_t*)(punkt_buffer)))
-		{
-			delete[] punkt_buffer;
-			count = 0;
-		}
-		return;
-	}
-
-
-
-	void MyLasdacFuncs::print_test() {
-		printf("test");
-		getchar();
-		return;
-	}
-
-}*/
-int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, Point * punkter) {
+int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, uint8_t * punkter) {
 
 	static int count = 0;
 	int actual_transfer = 0;
 	int r_value = 0;
+	int speedmsb = (speed & 0xff00);
+	int speedlsb = (speed & 0x00ff);
+	int nr_pointmsb = (nr_points & 0xff00);
+	int nr_pointlsb = (nr_points & 0xff00);
 
-	punkter[nr_points] = { speed,nr_points,flags,0,0,0 };
+	punkter[(nr_points * 8)] = speedlsb;
+	punkter[((nr_points * 8))+1] = speedmsb;
+	punkter[((nr_points * 8)) + 2] = nr_pointlsb;
+	punkter[((nr_points * 8)) + 3] = nr_pointmsb;
+	punkter[((nr_points * 8)) + 4] = flags;
 
-	r_value = libusb_bulk_transfer(devh, ep_bulk_out, (uint8_t*)(punkter), sizeof(punkter), &actual_transfer, 32);
-	if (r_value == 0 && actual_transfer == sizeof((uint8_t*)(punkter)))
+
+
+	r_value = libusb_bulk_transfer(devh, ep_bulk_out, punkter, sizeof(punkter), &actual_transfer, 0);
+	if (r_value == 0 && actual_transfer == sizeof(punkter))
 	{
 		return 0;
 	}
+
+
+
 	else return -1;
 }
+
 int open_device() {
 	int r = 0;
 	r = libusb_init(NULL);
-	if (r < 0) { return -1; }
+	if (r < 0) { 
+		return -1; }
 	devh = libusb_open_device_with_vid_pid(NULL, 0x03eb, 0x2423);
 	if (!devh) {
-		return -1;
+		return -2;
 	}
 	r = libusb_claim_interface(devh, 0); 
 	if (r < 0) {
-		
-		return -1;
+		return -3;
 	}
 	r = libusb_set_interface_alt_setting(devh, 0, 1);
 	if (r < 0) {
-
-		return -1;
+		printf("failed to set alternate interface error nr:%d n/",r);
+		return -4;
 	}
 	return 0;
 }
@@ -104,3 +73,23 @@ void print_test2() {
 	return;
 }
 
+/*int read_frame(Point * punkter) {
+int r_value = 0;
+int actual_transfer;
+uint8_t* buffer = new uint8_t[sizeof(punkter)];
+
+r_value = libusb_bulk_transfer(devh, ep_bulk_inn, buffer, sizeof(punkter), &actual_transfer, 0);
+if (r_value == 0 && actual_transfer == sizeof(punkter))
+{
+for (int i = 0; i < 8; i++)
+printf("%x ", buffer[i]);
+
+delete[] buffer;
+return 0;
+}
+else {
+delete[] buffer;
+return -1;
+}
+
+}*/
