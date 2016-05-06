@@ -30,8 +30,8 @@ int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, uint8_t * punk
 
 
 
-	r_value = libusb_bulk_transfer(devh, ep_bulk_out, punkter, sizeof(punkter), &actual_transfer, 0);
-	if (r_value == 0 && actual_transfer == sizeof(punkter))
+	r_value = libusb_bulk_transfer(devh, ep_bulk_out, punkter, (nr_points +5), &actual_transfer, 0);
+	if (r_value == 0 && actual_transfer == (nr_points + 5))
 	{
 		return 0;
 	}
@@ -76,12 +76,12 @@ void print_test2() {
 int read_frame(uint16_t nr_points) {
 int r_value = 0;
 int actual_transfer;
-uint8_t* buffer = new uint8_t[sizeof(nr_points)];
+uint8_t* buffer = new uint8_t[(nr_points*8)+5];
 
 r_value = libusb_bulk_transfer(devh, ep_bulk_inn, buffer, sizeof(nr_points), &actual_transfer, 0);
 if (r_value == 0 && actual_transfer == sizeof(nr_points))
 {
-for (int i = 0; i < 8; i++)
+for (int i = 0; i < ((nr_points * 8) + 5); i++)
 printf("%x ", buffer[i]);
 
 delete[] buffer;
