@@ -12,19 +12,9 @@
 #define LASDACDLL_API __declspec(dllimport) 
 #endif
 
-typedef struct
-{
-	UINT16 X;
-	UINT16 Y;
-	UINT8  R;
-	UINT8  G;
-	UINT8  B;
-	UINT8  I;
-}Point;
-
 LASDACDLL_API void print_test2();
 LASDACDLL_API int open_device();
-LASDACDLL_API int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, Point *punkter);
+LASDACDLL_API int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, uint8_t *punkter);
 LASDACDLL_API int close_device();
 
 /*namespace LasdacFuncs

@@ -57,19 +57,32 @@ namespace LasdacFuncs
 	}
 
 }*/
-int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, Point* punkter) {
+int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, uint8_t* punkter) {
 
 	static int count = 0;
 	int actual_transfer = 0;
 	int r_value = 0;
+	uint8_t speedmsb = ((speed >> 8) & 0xff);
+	uint8_t speedlsb = (speed & 0x00ff);
+	uint8_t nr_pointmsb = ((nr_points >> 8) & 0xff);
+	uint8_t nr_pointlsb = (nr_points & 0x00ff);
 
-	punkter[nr_points] = { speed,nr_points,flags,0,0,0 };
+	punkter[(nr_points * 8)] = speedlsb;
+	punkter[((nr_points * 8)) + 1] = speedmsb;
+	punkter[((nr_points * 8)) + 2] = nr_pointlsb;
+	punkter[((nr_points * 8)) + 3] = nr_pointmsb;
+	punkter[((nr_points * 8)) + 4] = flags;
 
-	r_value = libusb_bulk_transfer(devh, ep_bulk_out, (uint8_t*)(punkter), sizeof(punkter), &actual_transfer, 64);
-	if (r_value == 0 && actual_transfer == sizeof((uint8_t*)(punkter)))
+
+
+	r_value = libusb_bulk_transfer(devh, ep_bulk_out, punkter, (nr_points * 8 + 5), &actual_transfer, 0);
+	if (r_value == 0 && actual_transfer == (nr_points * 8 + 5))
 	{
 		return 0;
 	}
+
+
+
 	else return -1;
 }
 
