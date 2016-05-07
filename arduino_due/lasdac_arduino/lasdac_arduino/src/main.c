@@ -43,17 +43,17 @@ uint16_t framePos = 0;					//current position in frame in points
 uint16_t newFrameSize = 0;				//incoming frame total size in points
 bool newFrameReady = false;				//signals a new frame has been received and is ready to play when the current one ends
 bool playing = false;					//signals a point should be output next systick
-uint32_t outputSpeed = 20000;			//points per second
-bool notRepeat = true;						//signals that current frame should be repeated until new one is received
-bool newNotRepeat = true;					//notRepeat info for next frame
+uint32_t outputSpeed = 20000;			//points per second rate
+bool notRepeat = true;					//signals that current frame should be only be played once even if no new frame arrives before it ends
+bool newNotRepeat = true;				//notRepeat value for pending frame
 
 uint8_t frame1[MAXFRAMESIZE*8];					//frame buffer 1
 uint8_t frame2[MAXFRAMESIZE*8];					//frame buffer 2
 uint8_t frame3[MAXFRAMESIZE*8];					//frame buffer 3
-uint8_t* frameAddress = &frame1[0];			//pointer to frame currently being played
-uint8_t* newFrameAddress = &frame2[0];		//pointer to pending frame waiting to be played
-uint8_t* usbBulkBufferAddress = &frame3[0];	//pointer to usb bulk transfer buffer
-uint8_t usbInterruptBuffer[1];
+uint8_t* frameAddress = &frame1[0];				//pointer to frame currently being played
+uint8_t* newFrameAddress = &frame2[0];			//pointer to pending frame waiting to be played
+uint8_t* usbBulkBufferAddress = &frame3[0];		//pointer to usb bulk transfer buffer
+uint8_t usbInterruptBuffer[3];									
 uint8_t* usbInterruptBufferAddress = &usbInterruptBuffer[0];	//pointer to usb interrupt buffer
 
 void SysTick_Handler(void) //systick timer ISR
@@ -113,10 +113,17 @@ void SysTick_Handler(void) //systick timer ISR
 void usb_bulk_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id_t ep)
 {
 	UNUSED(ep);
-	if ( (!newFrameReady) && (status == UDD_EP_TRANSFER_OK) && (length <= MAXFRAMESIZE * 8 + 5) )
+	
+	//multi-byte values are little endian
+	//0-n:	frame data, point is 16bit X, 16bit Y, 8bit R, 8bit G, 8bit B, 8bit I
+	//n:	output rate 16bit
+	//n+2:	frame size in points 16bit
+	//n+4:	flags
+	
+	if ( (!newFrameReady) && (status == UDD_EP_TRANSFER_OK) && (length <= MAXFRAMESIZE * 8 + 5) ) //if received ok and buffer is not full
 	{
-		uint16_t numOfPointBytes = length - 5; //rounding in case of decimal errors
-		uint16_t numOfPointBytes2 = ((usbBulkBufferAddress[numOfPointBytes + 3] << 8) + usbBulkBufferAddress[numOfPointBytes + 2]) * 8;
+		uint16_t numOfPointBytes = length - 5; //from length of received data
+		uint16_t numOfPointBytes2 = ((usbBulkBufferAddress[numOfPointBytes + 3] << 8) + usbBulkBufferAddress[numOfPointBytes + 2]) * 8; //from control bytes
 		
 		if (numOfPointBytes == numOfPointBytes2) //sanity check, skip frame if conflicting frame size information
 		{
@@ -148,7 +155,6 @@ void usb_bulk_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id
 			cpu_irq_leave_critical();
 		}
 	}
-	
 	
 	udi_vendor_bulk_out_run((uint8_t*)usbBulkBufferAddress, MAXFRAMESIZE * 8 + 5, usb_bulk_out_callback);
 }
@@ -207,6 +213,8 @@ int main (void) //entry function
 	irq_initialize_vectors();
 	cpu_irq_enable();
 	udc_start();
+	NVIC_SetPriority(SysTick_IRQn, 0);
+	NVIC_SetPriority(UOTGHS_IRQn, 1);
 	
 	shutter_set(HIGH);
 	statusled_set(LOW);
