@@ -35,6 +35,9 @@ void shutter_set(bool level);		//sets the shutter level
 void statusled_set(bool level);		//sets the status LED level
 void point_output(void);			//outputs current point (controlled by framePos and frameAddress variables)
 void blank_and_center(void);		//blanks and centers output
+void spi_init(void);				//sets up SPI module
+void dac_init(void);				//sets up DACC module
+void iopins_init(void);				//sets up IO module and pins
 
 //USB transfer interrupts
 void usb_bulk_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id_t ep);

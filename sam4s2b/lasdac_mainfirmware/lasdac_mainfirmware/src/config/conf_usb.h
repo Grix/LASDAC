@@ -59,7 +59,7 @@
 #define  USB_DEVICE_PRODUCT_ID            USB_PID_ATMEL_ASF_VENDOR_CLASS
 #define  USB_DEVICE_MAJOR_VERSION         1
 #define  USB_DEVICE_MINOR_VERSION         0
-#define  USB_DEVICE_POWER                 200 // Consumption on VBUS line (mA)
+#define  USB_DEVICE_POWER                 250 // Consumption on VBUS line (mA)
 #define  USB_DEVICE_ATTR                  (USB_CONFIG_ATTR_BUS_POWERED)
 	//(USB_CONFIG_ATTR_SELF_POWERED)
 // (USB_CONFIG_ATTR_BUS_POWERED)
@@ -69,7 +69,7 @@
 //! USB Device string definitions (Optional)
  #define  USB_DEVICE_MANUFACTURE_NAME      "HIB"
  #define  USB_DEVICE_PRODUCT_NAME          "LASDAC"
-// #define  USB_DEVICE_SERIAL_NAME           "12...EF"
+ #define  USB_DEVICE_SERIAL_NAME           "00001"
 
 /**
  * Device speeds support
@@ -78,7 +78,7 @@
  */
 //! To authorize the High speed
 #if (UC3A3||UC3A4)
-//# define  USB_DEVICE_HS_SUPPORT
+#define  USB_DEVICE_HS_SUPPORT
 #endif
 //@}
 

@@ -18,15 +18,15 @@
 #define BOARD_FREQ_MAINCK_BYPASS    (16000000U)
 
 /** Master clock frequency */
-#define BOARD_MCK                   (100000000U)
+#define BOARD_MCK                   (96000000U) //max for uc: 120 MHz
 //CHIP_FREQ_CPU_MAX
 
 /** board main clock xtal startup time */
-#define BOARD_OSC_STARTUP_US   15625
+#define BOARD_OSC_STARTUP_US		15625
 
 //GPIO pins
-#define PIN_SHUTTER IOPORT_CREATE_PIN(PIOA,26)
-#define PIN_STATUSLED IOPORT_CREATE_PIN(PIOA,24)
+#define PIN_SHUTTER			(IOPORT_CREATE_PIN(PIOA,26))
+#define PIN_STATUSLED		(IOPORT_CREATE_PIN(PIOA,24))
 
 /*! SPI MISO pin definition. */
 #define SPI_MISO_GPIO        (PIO_PA12_IDX)

@@ -60,8 +60,8 @@
 //#define CONFIG_SYSCLK_SOURCE        SYSCLK_SRC_PLLBCK
 
 // ===== System Clock (MCK) Prescaler Options   (Fmck = Fsys / (SYSCLK_PRES))
-//#define CONFIG_SYSCLK_PRES          SYSCLK_PRES_1
-#define CONFIG_SYSCLK_PRES          SYSCLK_PRES_2
+#define CONFIG_SYSCLK_PRES          SYSCLK_PRES_1
+//#define CONFIG_SYSCLK_PRES          SYSCLK_PRES_2
 //#define CONFIG_SYSCLK_PRES          SYSCLK_PRES_4
 //#define CONFIG_SYSCLK_PRES          SYSCLK_PRES_8
 //#define CONFIG_SYSCLK_PRES          SYSCLK_PRES_16
@@ -72,14 +72,14 @@
 // ===== PLL0 (A) Options   (Fpll = (Fclk * PLL_mul) / PLL_div)
 // Use mul and div effective values here.
 #define CONFIG_PLL0_SOURCE          PLL_SRC_MAINCK_XTAL
-#define CONFIG_PLL0_MUL             10
+#define CONFIG_PLL0_MUL             6
 #define CONFIG_PLL0_DIV             1
 
 // ===== PLL1 (B) Options   (Fpll = (Fclk * PLL_mul) / PLL_div)
 // Use mul and div effective values here.
 #define CONFIG_PLL1_SOURCE          PLL_SRC_MAINCK_XTAL
-#define CONFIG_PLL1_MUL             12
-#define CONFIG_PLL1_DIV             5
+#define CONFIG_PLL1_MUL             3
+#define CONFIG_PLL1_DIV             1
 
 // ===== USB Clock Source Options   (Fusb = FpllX / USB_div)
 // Use div effective value here.
@@ -92,13 +92,13 @@
 // - System clock source: PLLA
 // - System clock prescaler: 2 (divided by 2)
 // - PLLA source: XTAL
-// - PLLA output: XTAL * 10 / 1
-// - System clock: 20 * 10 / 1 / 2 = 100MHz
+// - PLLA output: XTAL * 6 / 1
+// - System clock: 16 * 6 / 1 / 1 = 96 MHz
 // ===== Target frequency (USB Clock)
 // - USB clock source: PLLB
 // - USB clock divider: 1
-// - PLLB output: XTAL * 12 / 5
-// - USB clock: 20 * 12 / 5 / 1 = 48MHz
+// - PLLB output: XTAL * 3 / 1
+// - USB clock: 16 * 3 / 1 / 1 = 48 MHz
 
 
 #endif /* CONF_CLOCK_H_INCLUDED */
