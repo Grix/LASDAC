@@ -2,9 +2,9 @@
 #include <board.h>
 #include <conf_board.h>
 
-void spi_init(void);
-void dac_init(void);
-void iopins_init(void);
+void spi_init(void);		//sets up SPI module
+void dac_init(void);		//sets up DACC module
+void iopins_init(void);		//sets up IO module and pins
 
 void board_init(void)
 {
@@ -19,6 +19,9 @@ void board_init(void)
 	irq_initialize_vectors();
 	cpu_irq_enable();
 	udc_start();
+	
+	NVIC_SetPriority(SysTick_IRQn, 0);
+	NVIC_SetPriority(UDP_IRQn, 1);
 }
 
 
@@ -46,7 +49,7 @@ void spi_init(void) //setup SPI for DAC084S085
 	spi_set_clock_polarity(SPI, 0, 0);
 	spi_set_clock_phase(SPI, 0, 0);
 	spi_set_bits_per_transfer(SPI, 0, SPI_CSR_BITS_16_BIT);
-	spi_set_baudrate_div(SPI, 0, (sysclk_get_cpu_hz() / 30000000) + 1 ); //default for dac: 30000000
+	spi_set_baudrate_div(SPI, 0, (sysclk_get_cpu_hz() / 20000000) + 1 ); //max for dac: 30000000
 	spi_set_transfer_delay(SPI, 0, 0, 0);
 	spi_enable(SPI);
 }

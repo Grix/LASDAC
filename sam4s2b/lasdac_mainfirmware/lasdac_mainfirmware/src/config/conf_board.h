@@ -14,8 +14,8 @@
 /** Board oscillator settings */
 #define BOARD_FREQ_SLCK_XTAL        (32768U)
 #define BOARD_FREQ_SLCK_BYPASS      (32768U)
-#define BOARD_FREQ_MAINCK_XTAL      (20000000U)
-#define BOARD_FREQ_MAINCK_BYPASS    (20000000U)
+#define BOARD_FREQ_MAINCK_XTAL      (16000000U)
+#define BOARD_FREQ_MAINCK_BYPASS    (16000000U)
 
 /** Master clock frequency */
 #define BOARD_MCK                   (100000000U)
