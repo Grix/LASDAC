@@ -1,23 +1,21 @@
-﻿Build started 2016-05-06 14:29:23.
-     1>Project "C:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll\LasdacDll.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2016-05-21 10:05.44.
+     1>Project "D:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll\LasdacDll.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll /I"C:\Users\BG\Documents\Visual Studio 2015\Projects\LasdacDll\LasdacDll" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LASDACDLL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt LasdacDll.cpp
          LasdacDll.cpp
-     1>c:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\libusb.h(738): warning C4200: nonstandard extension used : zero-sized array in struct/union
+     1>d:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\libusb.h(738): warning C4200: nonstandard extension used : zero-sized array in struct/union
                  Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
-     1>c:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\libusb.h(769): warning C4200: nonstandard extension used : zero-sized array in struct/union
+     1>d:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\libusb.h(769): warning C4200: nonstandard extension used : zero-sized array in struct/union
                  Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
-     1>c:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\libusb.h(1262): warning C4200: nonstandard extension used : zero-sized array in struct/union
+     1>d:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\libusb.h(1262): warning C4200: nonstandard extension used : zero-sized array in struct/union
                  Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
-     1>c:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\lasdacdll.h(10): warning C4005: 'LASDACDLL_API' : macro redefinition
-                 c:\github\lasdac\driver\lasdacdll_gitle\lasdacdll\lasdacdll.h(9) : see previous definition of 'LASDACDLL_API'
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\GitHub\LASDAC\Driver\LasdacDll_gitle\Debug\LasdacDll.dll" /INCREMENTAL /NOLOGO /LIBPATH:C:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll /LIBPATH:"C:\Users\BG\Documents\Visual Studio 2015\Projects\LasdacDll\LasdacDll" "libusb-1.0.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\GitHub\LASDAC\Driver\LasdacDll_gitle\Debug\LasdacDll.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\GitHub\LASDAC\Driver\LasdacDll_gitle\Debug\LasdacDll.lib" /MACHINE:X86 /DLL Debug\dllmain.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\LASDAC\Driver\LasdacDll_gitle\Debug\LasdacDll.dll" /INCREMENTAL /NOLOGO /LIBPATH:C:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll /LIBPATH:"C:\Users\BG\Documents\Visual Studio 2015\Projects\LasdacDll\LasdacDll" "libusb-1.0.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\LASDAC\Driver\LasdacDll_gitle\Debug\LasdacDll.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\LASDAC\Driver\LasdacDll_gitle\Debug\LasdacDll.lib" /MACHINE:X86 /DLL Debug\dllmain.obj
          Debug\LasdacDll.obj
          Debug\stdafx.obj
-         LasdacDll.vcxproj -> C:\GitHub\LASDAC\Driver\LasdacDll_gitle\Debug\LasdacDll.dll
-     1>Done Building Project "C:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll\LasdacDll.vcxproj" (Build target(s)).
+         LasdacDll.vcxproj -> D:\GitHub\LASDAC\Driver\LasdacDll_gitle\Debug\LasdacDll.dll
+     1>Done Building Project "D:\GitHub\LASDAC\Driver\LasdacDll_gitle\LasdacDll\LasdacDll.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.72
+Time Elapsed 00:00:00.40

@@ -29,11 +29,18 @@ int main (void)
 	NVIC_SetPriority(SysTick_IRQn, 0); 
 	NVIC_SetPriority(UDP_IRQn, 1);
 	
-	shutter_set(HIGH);
-	statusled_set(LOW);
+	shutter_set(LOW);
+	statusled_set(HIGH);
 	blank_and_center();
 	
+	udi_vendor_bulk_out_run((uint8_t*)usbBulkBufferAddress, MAXFRAMESIZE * 8 + 5, usb_bulk_out_callback);
+	udi_vendor_interrupt_out_run((uint8_t*)usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
+	
 	//waiting for interrupts..
+	while (1)
+	{
+		__WFI();
+	}
 }
 
 void SysTick_Handler(void) //systick timer ISR, called for each point
@@ -188,7 +195,7 @@ void point_output(void) //sends point data to the DACs, data is point number "fr
 
 void blank_and_center(void) //outputs a blanked and centered point
 {
-	uint8_t blankedPoint[8] = {0x00, 0x80, 0x00, 0x80, 0,0,0,0};
+	uint8_t blankedPoint[8] = {0x00, 0x08, 0x00, 0x08, 0,0,0,0};
 	uint8_t* currentPoint = &blankedPoint[0];
 	
 	spi_write(SPI, (currentPoint[5] << 4) + (0b0001 << 12), 0, 0); //G
@@ -199,9 +206,9 @@ void blank_and_center(void) //outputs a blanked and centered point
 	if ((dacc_get_interrupt_status(DACC) & DACC_ISR_TXRDY) == DACC_ISR_TXRDY) //if DAC ready
 	{
 		dacc_set_channel_selection(DACC, 0);
-		dacc_write_conversion_data(DACC, (currentPoint[0] << 8) + currentPoint[1] ); //X
+		dacc_write_conversion_data(DACC, (currentPoint[1] << 8) + currentPoint[0] ); //X
 		dacc_set_channel_selection(DACC, 1);
-		dacc_write_conversion_data(DACC, (currentPoint[2] << 8) + currentPoint[3] ); //Y
+		dacc_write_conversion_data(DACC, (currentPoint[3] << 8) + currentPoint[2] ); //Y
 	}
 }
 

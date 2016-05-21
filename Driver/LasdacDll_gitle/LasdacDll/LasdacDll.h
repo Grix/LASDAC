@@ -5,12 +5,12 @@
 #include <windows.h>
 #include "libusb.h"
 
-#ifdef LASDACDLL_EXPORTS
-#define LASDACDLL_API __declspec(dllexport)
+//#ifdef LASDACDLL_EXPORTS
+//#define LASDACDLL_API __declspec(dllexport)
 #define LASDACDLL_API extern "C" __declspec (dllexport)
-#else
-#define LASDACDLL_API __declspec(dllimport) 
-#endif
+//#else
+//#define LASDACDLL_API __declspec(dllimport) 
+//#endif
 
 LASDACDLL_API void print_test2();
 LASDACDLL_API int open_device();

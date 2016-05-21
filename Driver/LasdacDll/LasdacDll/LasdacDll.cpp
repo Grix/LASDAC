@@ -8,8 +8,8 @@
 
 using namespace std;
 static struct libusb_device_handle *devh = NULL;
-#define ep_bulk_out	0x06
-#define ep_bulk_inn 0x85
+#define ep_bulk_out	0x02
+#define ep_bulk_inn 0x81
 
 
 int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, uint8_t * punkter) {

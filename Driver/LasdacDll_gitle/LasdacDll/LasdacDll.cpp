@@ -4,11 +4,10 @@
 #include "stdafx.h"
 #include "libusb.h"
 #include "LasdacDll.h"
-#include "stdio.h"
 
 using namespace std;
 static struct libusb_device_handle *devh = NULL;
-#define ep_bulk_out	0x06
+#define ep_bulk_out	0x02
 
 /*
 namespace LasdacFuncs
@@ -57,7 +56,7 @@ namespace LasdacFuncs
 	}
 
 }*/
-int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, uint8_t* punkter) {
+int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, uint8_t * punkter) {
 
 	static int count = 0;
 	int actual_transfer = 0;
@@ -75,8 +74,8 @@ int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, uint8_t* punkt
 
 
 
-	r_value = libusb_bulk_transfer(devh, ep_bulk_out, punkter, (nr_points * 8 + 5), &actual_transfer, 0);
-	if (r_value == 0 && actual_transfer == (nr_points * 8 + 5))
+	r_value = libusb_bulk_transfer(devh, ep_bulk_out, punkter, ((nr_points * 8) + 5), &actual_transfer, 0);
+	if (r_value == 0 && actual_transfer == ((nr_points * 8) + 5))
 	{
 		return 0;
 	}
@@ -86,35 +85,28 @@ int send_frame(uint8_t flags, uint16_t speed, uint16_t nr_points, uint8_t* punkt
 	else return -1;
 }
 
-
 int open_device() {
 	int r = 0;
 	r = libusb_init(NULL);
-	if (r < 0) 
+	if (r < 0) {
 		return -1;
+	}
 	devh = libusb_open_device_with_vid_pid(NULL, 0x03eb, 0x2423);
-	if (!devh)
+	if (!devh) {
 		return -2;
-	r = libusb_claim_interface(devh, 0); 
-	if (r < 0)
+	}
+	r = libusb_claim_interface(devh, 0);
+	if (r < 0) {
 		return -3;
+	}
 	r = libusb_set_interface_alt_setting(devh, 0, 1);
-	if (r < 0)
+	if (r < 0) {
 		return -4;
+	}
 	return 0;
 }
-
-
 int close_device() {
 	libusb_close(devh);
 	libusb_exit(NULL);
 	return 0;
 }
-
-
-void print_test2() {
-	printf("test");
-	getchar();
-	return;
-}
-

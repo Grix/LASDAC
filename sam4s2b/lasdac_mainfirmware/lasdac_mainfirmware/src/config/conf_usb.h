@@ -76,10 +76,10 @@
  * Low speed not supported by this vendor class
  * @{
  */
-//! To authorize the High speed
-#if (UC3A3||UC3A4)
-#define  USB_DEVICE_HS_SUPPORT
-#endif
+////! To authorize the High speed
+//#if (UC3A3||UC3A4)
+//#define  USB_DEVICE_HS_SUPPORT
+//#endif
 //@}
 
 
@@ -118,15 +118,15 @@
  * @{
  */
 //! Interface callback definition
-//#define UDI_VENDOR_ENABLE_EXT()          true
-//#define UDI_VENDOR_DISABLE_EXT()
+#define UDI_VENDOR_ENABLE_EXT()          true
+#define UDI_VENDOR_DISABLE_EXT()
+//#define UDI_VENDOR_ENABLE_EXT() callback_vendor_enable()
+//extern int callback_vendor_enable(void);
+//#define UDI_VENDOR_DISABLE_EXT() callback_vendor_disable()
+//extern void callback_vendor_disable(void);
+
 #define UDI_VENDOR_SETUP_OUT_RECEIVED()  false
 #define UDI_VENDOR_SETUP_IN_RECEIVED()   false
-
-#define UDI_VENDOR_ENABLE_EXT() callback_vendor_enable()
-extern int callback_vendor_enable(void);
-#define UDI_VENDOR_DISABLE_EXT() callback_vendor_disable()
-extern void callback_vendor_disable(void);
 /* *
  * #define  UDI_VENDOR_SETUP_OUT_RECEIVED()  my_vendor_setup_out_received()
  * extern bool my_vendor_setup_out_received(void);
@@ -136,18 +136,14 @@ extern void callback_vendor_disable(void);
 
 //! endpoints size for full speed
 //! Note: Disable the endpoints of a type, if size equal 0
-#define UDI_VENDOR_EPS_SIZE_INT_FS    64
-#define UDI_VENDOR_EPS_SIZE_BULK_FS   64
-#if SAMG55
-#define UDI_VENDOR_EPS_SIZE_ISO_FS   0
-#else
-#define UDI_VENDOR_EPS_SIZE_ISO_FS   512
-#endif
+#define  UDI_VENDOR_EPS_SIZE_INT_FS		64
+#define  UDI_VENDOR_EPS_SIZE_BULK_FS	64
+#define  UDI_VENDOR_EPS_SIZE_ISO_FS		0
 
-//! endpoints size for high speed
-#define UDI_VENDOR_EPS_SIZE_INT_HS    64
-#define UDI_VENDOR_EPS_SIZE_BULK_HS  512
-#define UDI_VENDOR_EPS_SIZE_ISO_HS    64
+#define  UDI_VENDOR_EPS_SIZE_INT_HS		64
+#define  UDI_VENDOR_EPS_SIZE_BULK_HS	512
+#define  UDI_VENDOR_EPS_SIZE_ISO_HS		0
+
 
 //@}
 
