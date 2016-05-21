@@ -30,11 +30,8 @@ int main (void)
 	NVIC_SetPriority(UDP_IRQn, 1);
 	
 	shutter_set(LOW);
-	statusled_set(HIGH);
+	//statusled_set(LOW);
 	blank_and_center();
-	
-	udi_vendor_bulk_out_run((uint8_t*)usbBulkBufferAddress, MAXFRAMESIZE * 8 + 5, usb_bulk_out_callback);
-	udi_vendor_interrupt_out_run((uint8_t*)usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
 	
 	//waiting for interrupts..
 	while (1)
@@ -224,6 +221,7 @@ void speed_set(uint32_t speed) //set the output speed in points per second
 
 int callback_vendor_enable(void)
 {
+	//statusled_set(HIGH);
 	udi_vendor_bulk_out_run((uint8_t*)usbBulkBufferAddress, MAXFRAMESIZE * 8 + 5, usb_bulk_out_callback);
 	udi_vendor_interrupt_out_run((uint8_t*)usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
 	return 1;
@@ -251,8 +249,8 @@ void statusled_set(bool level)
 
 void iopins_init(void) //setup io pins config
 {
-	ioport_set_pin_mode(PIN_SHUTTER, IOPORT_DIR_OUTPUT);
-	ioport_set_pin_mode(PIN_STATUSLED, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(PIN_SHUTTER, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(PIN_STATUSLED, IOPORT_DIR_OUTPUT);
 }
 
 void spi_init(void) //setup SPI for DAC084S085

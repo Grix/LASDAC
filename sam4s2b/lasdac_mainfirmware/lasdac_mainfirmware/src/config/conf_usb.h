@@ -118,12 +118,12 @@
  * @{
  */
 //! Interface callback definition
-#define UDI_VENDOR_ENABLE_EXT()          true
-#define UDI_VENDOR_DISABLE_EXT()
-//#define UDI_VENDOR_ENABLE_EXT() callback_vendor_enable()
-//extern int callback_vendor_enable(void);
-//#define UDI_VENDOR_DISABLE_EXT() callback_vendor_disable()
-//extern void callback_vendor_disable(void);
+//#define UDI_VENDOR_ENABLE_EXT()          true
+//#define UDI_VENDOR_DISABLE_EXT()
+#define UDI_VENDOR_ENABLE_EXT() callback_vendor_enable()
+extern int callback_vendor_enable(void);
+#define UDI_VENDOR_DISABLE_EXT() callback_vendor_disable()
+extern void callback_vendor_disable(void);
 
 #define UDI_VENDOR_SETUP_OUT_RECEIVED()  false
 #define UDI_VENDOR_SETUP_IN_RECEIVED()   false
@@ -136,13 +136,13 @@
 
 //! endpoints size for full speed
 //! Note: Disable the endpoints of a type, if size equal 0
-#define  UDI_VENDOR_EPS_SIZE_INT_FS		64
+#define  UDI_VENDOR_EPS_SIZE_INT_FS		8
 #define  UDI_VENDOR_EPS_SIZE_BULK_FS	64
-#define  UDI_VENDOR_EPS_SIZE_ISO_FS		0
+#define  UDI_VENDOR_EPS_SIZE_ISO_FS		512
 
-#define  UDI_VENDOR_EPS_SIZE_INT_HS		64
+#define  UDI_VENDOR_EPS_SIZE_INT_HS		8
 #define  UDI_VENDOR_EPS_SIZE_BULK_HS	512
-#define  UDI_VENDOR_EPS_SIZE_ISO_HS		0
+#define  UDI_VENDOR_EPS_SIZE_ISO_HS		512
 
 
 //@}

@@ -855,6 +855,7 @@ bool udd_ep_run(udd_ep_id_t ep, bool b_shortpacket,
 	if (USB_DEVICE_MAX_EP < ep) {
 		return false;
 	}
+	
 	// Get job about endpoint
 	ptr_job = &udd_ep_job[ep - 1];
 
@@ -863,6 +864,8 @@ bool udd_ep_run(udd_ep_id_t ep, bool b_shortpacket,
 			|| Is_udd_endpoint_stall_requested(ep)) {
 		return false; // Endpoint is halted
 	}
+	
+	ioport_set_pin_level(PIN_STATUSLED, true);
 
 	flags = cpu_irq_save();
 	if (ptr_job->busy == true) {
