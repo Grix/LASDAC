@@ -130,8 +130,8 @@ src/main.d src/main.o: ../src/main.c ../src/main.h ../src/asf.h \
  ../src/ASF/common/services/usb/udc/udd.h \
  ../src/ASF/common/services/usb/class/vendor/device/udi_vendor.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h \
- c:\program\ files\ (x86)\atmel\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
- c:\program\ files\ (x86)\atmel\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h
+ c:\program\ files\ (x86)\atmel\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\malloc.h \
+ c:\program\ files\ (x86)\atmel\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\malloc.h
 
 ../src/main.h:
 
@@ -411,6 +411,6 @@ c:\program\ files\ (x86)\atmel\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-n
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
 
-c:\program\ files\ (x86)\atmel\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
+c:\program\ files\ (x86)\atmel\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\malloc.h:
 
-c:\program\ files\ (x86)\atmel\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:
+c:\program\ files\ (x86)\atmel\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\malloc.h:

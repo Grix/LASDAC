@@ -4,13 +4,14 @@
 #define MAIN_H_
 
 #include "asf.h"
+#include <malloc.h>
 
 //macros
 #define MAXSPEED 50000 //in pps
-#define MINSPEED 1000 //in pps
-#define MAXFRAMESIZE 1001 //in points
+#define MINSPEED 6 //in pps
+#define MAXFRAMESIZE 2001 //in points
 
-//global variables, reserve memory for buffers
+//global variables
 uint16_t frameSize = 0;					//size of frame buffer in points
 uint16_t framePos = 0;					//current position in frame in points
 uint16_t newFrameSize = 0;				//incoming frame total size in points
@@ -20,14 +21,10 @@ uint32_t outputSpeed = 20000;			//points per second rate
 bool notRepeat = true;					//signals that current frame should be only be played once even if no new frame arrives before it ends
 bool newNotRepeat = true;				//notRepeat value for pending frame
 
-uint8_t frame1[MAXFRAMESIZE*8];					//frame buffer 1
-uint8_t frame2[MAXFRAMESIZE*8];					//frame buffer 2
-uint8_t frame3[MAXFRAMESIZE*8];					//frame buffer 3
-uint8_t* frameAddress = &frame1[0];				//pointer to frame currently being played
-uint8_t* newFrameAddress = &frame2[0];			//pointer to pending frame waiting to be played
-uint8_t* usbBulkBufferAddress = &frame3[0];		//pointer to usb bulk transfer buffer
-uint8_t usbInterruptBuffer[3];
-uint8_t* usbInterruptBufferAddress = &usbInterruptBuffer[0];	//pointer to usb interrupt buffer
+uint8_t* frameAddress;				//frame currently being played
+uint8_t* newFrameAddress;			//pending frame waiting to be played
+uint8_t* usbBulkBufferAddress;		//usb bulk transfer buffer
+uint8_t* usbInterruptBufferAddress;	//usb interrupt transfer buffer
 
 //functions
 void speed_set(uint32_t rate);		//sets up the systick interrupt to match the playback rate (in pps)

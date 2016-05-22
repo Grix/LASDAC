@@ -131,6 +131,7 @@ src/ASF/common/boards/user_board/init.d \
  ../src/ASF/common/services/usb/udc/udi.h \
  ../src/ASF/common/services/usb/udc/udd.h \
  ../src/ASF/common/services/usb/class/vendor/device/udi_vendor.h \
+ ../src/ASF/sam/drivers/wdt/wdt.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h
 
 ../src/asf.h:
@@ -406,5 +407,7 @@ c:\program\ files\ (x86)\atmel\ studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-n
 ../src/ASF/common/services/usb/udc/udd.h:
 
 ../src/ASF/common/services/usb/class/vendor/device/udi_vendor.h:
+
+../src/ASF/sam/drivers/wdt/wdt.h:
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:

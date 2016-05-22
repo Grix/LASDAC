@@ -9,42 +9,54 @@ Required Atmel Software Framework modules:
 	PIO
 	SPI - Serial Peripheral Interface
 	USB Device Vendor Class
+	WDT - Watchdog Timer
 */
 
 #include "main.h"
-#include <string.h>
+#include <malloc.h>
 
 //ENTRY
 int main (void)
 {
+	//allocate memory to buffers
+	frameAddress = malloc(MAXFRAMESIZE * sizeof(uint8_t));
+	newFrameAddress = malloc(MAXFRAMESIZE * sizeof(uint8_t));
+	usbBulkBufferAddress = malloc(MAXFRAMESIZE * sizeof(uint8_t));
+	usbInterruptBufferAddress = malloc(8 * sizeof(uint8_t));
+	
+	//start modules
 	sysclk_init();
 	dac_init();
 	spi_init();
 	iopins_init();
 	irq_initialize_vectors();
 	cpu_irq_enable();
+	sleepmgr_init();
 	udc_start();
+	wdt_disable(WDT);
 	
 	//set systick higher priority to avoid pauses in playback when processing USB transfers
 	NVIC_SetPriority(SysTick_IRQn, 0); 
 	NVIC_SetPriority(UDP_IRQn, 1);
 	
+	//default output
 	shutter_set(LOW);
-	//statusled_set(LOW);
+	statusled_set(LOW);
 	blank_and_center();
 	
+	//__WFI();
+	//sleepmgr_lock_mode(SLEEPMGR_ACTIVE);
+	//sleepmgr_enter_sleep();
+	
 	//waiting for interrupts..
-	while (1)
-	{
-		__WFI();
-	}
+	//while (true)
+		//__WFI();
 }
 
 void SysTick_Handler(void) //systick timer ISR, called for each point
 {
 	if (playing)
 	{
-		statusled_set(HIGH);
 		if (framePos >= frameSize)
 		{
 			//frame finished
@@ -88,8 +100,6 @@ void SysTick_Handler(void) //systick timer ISR, called for each point
 			framePos += 8;
 		}
 	}
-	else
-	statusled_set(LOW);
 }
 
 void usb_bulk_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id_t ep)
@@ -188,6 +198,8 @@ void point_output(void) //sends point data to the DACs, data is point number "fr
 		dacc_set_channel_selection(DACC, 1);
 		dacc_write_conversion_data(DACC, (currentPoint[3] << 8) + currentPoint[2] ); //Y
 	}
+	
+	statusled_set(HIGH);
 }
 
 void blank_and_center(void) //outputs a blanked and centered point
@@ -207,6 +219,8 @@ void blank_and_center(void) //outputs a blanked and centered point
 		dacc_set_channel_selection(DACC, 1);
 		dacc_write_conversion_data(DACC, (currentPoint[3] << 8) + currentPoint[2] ); //Y
 	}
+	
+	statusled_set(LOW);
 }
 
 void speed_set(uint32_t speed) //set the output speed in points per second
@@ -219,20 +233,22 @@ void speed_set(uint32_t speed) //set the output speed in points per second
 	SysTick_Config( (sysclk_get_cpu_hz() / speed) + 1);
 }
 
-int callback_vendor_enable(void)
+int callback_vendor_enable(void) //usb connection opened, preparing for activity
 {
-	//statusled_set(HIGH);
+	//sleepmgr_lock_mode(SLEEPMGR_ACTIVE);
 	udi_vendor_bulk_out_run((uint8_t*)usbBulkBufferAddress, MAXFRAMESIZE * 8 + 5, usb_bulk_out_callback);
 	udi_vendor_interrupt_out_run((uint8_t*)usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
 	return 1;
 }
 
-void callback_vendor_disable(void)
+void callback_vendor_disable(void) //usb connection closed, sleeping to save power
 {
 	playing = false;
 	framePos = 0;
 	blank_and_center();
 	statusled_set(LOW);
+	//sleepmgr_lock_mode(SLEEPMGR_WAIT_FAST);
+	//sleepmgr_enter_sleep();
 }
 
 void shutter_set(bool level)
@@ -245,7 +261,7 @@ void statusled_set(bool level)
 	ioport_set_pin_level(PIN_STATUSLED, level);
 }
 
-//INIT FUNCTIONS
+//INIT FUNCTIONS:
 
 void iopins_init(void) //setup io pins config
 {

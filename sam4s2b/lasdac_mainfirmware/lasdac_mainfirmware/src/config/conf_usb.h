@@ -71,6 +71,9 @@
  #define  USB_DEVICE_PRODUCT_NAME          "LASDAC"
  #define  USB_DEVICE_SERIAL_NAME           "00001"
 
+//sleep manager
+//#define UDD_NO_SLEEP_MGR
+
 /**
  * Device speeds support
  * Low speed not supported by this vendor class
