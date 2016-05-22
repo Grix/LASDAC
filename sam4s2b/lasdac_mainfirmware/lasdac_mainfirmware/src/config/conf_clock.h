@@ -90,7 +90,7 @@
 // ===== Target frequency (System clock)
 // - XTAL frequency: 12MHz
 // - System clock source: PLLA
-// - System clock prescaler: 2 (divided by 2)
+// - System clock prescaler: 1 (divided by 1)
 // - PLLA source: XTAL
 // - PLLA output: XTAL * 6 / 1
 // - System clock: 16 * 6 / 1 / 1 = 96 MHz

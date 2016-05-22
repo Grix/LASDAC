@@ -44,22 +44,19 @@ int main (void)
 	statusled_set(LOW);
 	blank_and_center();
 	
-	//__WFI();
-	//sleepmgr_lock_mode(SLEEPMGR_ACTIVE);
-	//sleepmgr_enter_sleep();
+	sleepmgr_lock_mode(SLEEPMGR_WAIT_FAST);
 	
 	//waiting for interrupts..
-	//while (true)
-		//__WFI();
+	while (true)
+		sleepmgr_enter_sleep();
 }
 
 void SysTick_Handler(void) //systick timer ISR, called for each point
 {
 	if (playing)
 	{
-		if (framePos >= frameSize)
+		if (framePos >= frameSize) //if frame reached the end
 		{
-			//frame finished
 			if (newFrameReady)
 			{
 				//load new frame, switch buffers
@@ -158,9 +155,8 @@ void usb_interrupt_out_callback(udd_ep_status_t status, iram_size_t length, udd_
 	
 	UNUSED(ep);
 	if ( (status == UDD_EP_TRANSFER_OK) && (length == 3) )
-	{
-			
-		if (usbInterruptBufferAddress[0] == 0x01)			//STOP
+	{	
+		if (usbInterruptBufferAddress[0] == 0x01)		//STOP
 		{
 			playing = false;
 			framePos = 0;
@@ -235,9 +231,12 @@ void speed_set(uint32_t speed) //set the output speed in points per second
 
 int callback_vendor_enable(void) //usb connection opened, preparing for activity
 {
-	//sleepmgr_lock_mode(SLEEPMGR_ACTIVE);
+	sleepmgr_unlock_mode(SLEEPMGR_WAIT_FAST);
+	sleepmgr_lock_mode(SLEEPMGR_ACTIVE);
+	
 	udi_vendor_bulk_out_run((uint8_t*)usbBulkBufferAddress, MAXFRAMESIZE * 8 + 5, usb_bulk_out_callback);
 	udi_vendor_interrupt_out_run((uint8_t*)usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
+	
 	return 1;
 }
 
@@ -247,8 +246,9 @@ void callback_vendor_disable(void) //usb connection closed, sleeping to save pow
 	framePos = 0;
 	blank_and_center();
 	statusled_set(LOW);
-	//sleepmgr_lock_mode(SLEEPMGR_WAIT_FAST);
-	//sleepmgr_enter_sleep();
+	
+	sleepmgr_unlock_mode(SLEEPMGR_ACTIVE);
+	sleepmgr_lock_mode(SLEEPMGR_WAIT_FAST);
 }
 
 void shutter_set(bool level)
