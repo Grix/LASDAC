@@ -145,7 +145,7 @@ void usb_bulk_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id
 		}
 	}
 	
-	udi_vendor_bulk_out_run((uint8_t*)usbBulkBufferAddress, MAXFRAMESIZE * 8 + 5, usb_bulk_out_callback);
+	udi_vendor_bulk_out_run(usbBulkBufferAddress, MAXFRAMESIZE * 8 + 5, usb_bulk_out_callback);
 }
 
 void usb_interrupt_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id_t ep)
@@ -173,7 +173,7 @@ void usb_interrupt_out_callback(udd_ep_status_t status, iram_size_t length, udd_
 		}
 	}
 	
-	udi_vendor_interrupt_out_run((uint8_t*)usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
+	udi_vendor_interrupt_out_run(usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
 }
 
 
@@ -195,7 +195,7 @@ void point_output(void) //sends point data to the DACs, data is point number "fr
 		dacc_write_conversion_data(DACC, (currentPoint[3] << 8) + currentPoint[2] ); //Y
 	}
 	
-	statusled_set(HIGH);
+	statusled_set( (currentPoint[4] || currentPoint[5] || currentPoint[6] || currentPoint[7]) ); //turn on status led if not blanked
 }
 
 void blank_and_center(void) //outputs a blanked and centered point
@@ -203,10 +203,10 @@ void blank_and_center(void) //outputs a blanked and centered point
 	uint8_t blankedPoint[8] = {0x00, 0x08, 0x00, 0x08, 0,0,0,0};
 	uint8_t* currentPoint = &blankedPoint[0];
 	
+	spi_write(SPI, (currentPoint[4] << 4) + (0b1101 << 12), 0, 0); //R
 	spi_write(SPI, (currentPoint[5] << 4) + (0b0001 << 12), 0, 0); //G
 	spi_write(SPI, (currentPoint[6] << 4) + (0b0101 << 12), 0, 0); //B
 	spi_write(SPI, (currentPoint[7] << 4) + (0b1001 << 12), 0, 0); //I
-	spi_write(SPI, (currentPoint[4] << 4) + (0b1101 << 12), 0, 0); //R
 	
 	if ((dacc_get_interrupt_status(DACC) & DACC_ISR_TXRDY) == DACC_ISR_TXRDY) //if DAC ready
 	{
@@ -219,14 +219,14 @@ void blank_and_center(void) //outputs a blanked and centered point
 	statusled_set(LOW);
 }
 
-void speed_set(uint32_t speed) //set the output speed in points per second
+void speed_set(uint32_t rate) //set the output speed in points per second
 {
-	if (speed > MAXSPEED)
-	speed = MAXSPEED;
-	else if (speed < MINSPEED)
-	speed = MINSPEED;
-	outputSpeed = speed;
-	SysTick_Config( (sysclk_get_cpu_hz() / speed) + 1);
+	if (rate > MAXSPEED)
+	rate = MAXSPEED;
+	else if (rate < MINSPEED)
+	rate = MINSPEED;
+	outputSpeed = rate;
+	SysTick_Config( (sysclk_get_cpu_hz() / rate) + 1);
 }
 
 int callback_vendor_enable(void) //usb connection opened, preparing for activity
@@ -234,8 +234,8 @@ int callback_vendor_enable(void) //usb connection opened, preparing for activity
 	sleepmgr_unlock_mode(SLEEPMGR_WAIT_FAST);
 	sleepmgr_lock_mode(SLEEPMGR_ACTIVE);
 	
-	udi_vendor_bulk_out_run((uint8_t*)usbBulkBufferAddress, MAXFRAMESIZE * 8 + 5, usb_bulk_out_callback);
-	udi_vendor_interrupt_out_run((uint8_t*)usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
+	udi_vendor_bulk_out_run(usbBulkBufferAddress, MAXFRAMESIZE * 8 + 5, usb_bulk_out_callback);
+	udi_vendor_interrupt_out_run(usbInterruptBufferAddress, 3, usb_interrupt_out_callback);
 	
 	return 1;
 }
@@ -287,7 +287,7 @@ void spi_init(void) //setup SPI for DAC084S085
 	spi_set_clock_polarity(SPI, 0, 0);
 	spi_set_clock_phase(SPI, 0, 0);
 	spi_set_bits_per_transfer(SPI, 0, SPI_CSR_BITS_16_BIT);
-	spi_set_baudrate_div(SPI, 0, (sysclk_get_cpu_hz() / 20000000) + 1 ); //max for dac: 30000000
+	spi_set_baudrate_div(SPI, 0, 6 ); //96Mhz / 6 = 16MHz
 	spi_set_transfer_delay(SPI, 0, 0, 0);
 	spi_enable(SPI);
 }

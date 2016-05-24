@@ -864,8 +864,6 @@ bool udd_ep_run(udd_ep_id_t ep, bool b_shortpacket,
 			|| Is_udd_endpoint_stall_requested(ep)) {
 		return false; // Endpoint is halted
 	}
-	
-	ioport_set_pin_level(PIN_STATUSLED, true);
 
 	flags = cpu_irq_save();
 	if (ptr_job->busy == true) {
