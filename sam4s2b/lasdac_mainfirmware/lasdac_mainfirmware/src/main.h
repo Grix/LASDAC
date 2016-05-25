@@ -9,7 +9,7 @@
 //macros
 #define MAXSPEED 50000 //in pps
 #define MINSPEED 6 //in pps
-#define MAXFRAMESIZE 2001 //in points
+#define MAXFRAMESIZE 1801 //in points
 
 //global variables
 uint16_t frameSize = 0;					//size of frame buffer in points

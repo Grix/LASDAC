@@ -15,13 +15,18 @@ Required Atmel Software Framework modules:
 #include "main.h"
 #include <malloc.h>
 
+
+///debug vars
+bool toggle = true;
+bool toggle2 = true;
+
 //ENTRY
 int main (void)
 {
 	//allocate memory to buffers
-	frameAddress = malloc(MAXFRAMESIZE * sizeof(uint8_t));
-	newFrameAddress = malloc(MAXFRAMESIZE * sizeof(uint8_t));
-	usbBulkBufferAddress = malloc(MAXFRAMESIZE * sizeof(uint8_t));
+	frameAddress = malloc(MAXFRAMESIZE * 8 * sizeof(uint8_t));
+	newFrameAddress = malloc(MAXFRAMESIZE * 8 * sizeof(uint8_t));
+	usbBulkBufferAddress = malloc(MAXFRAMESIZE * 8 * sizeof(uint8_t));
 	usbInterruptBufferAddress = malloc(8 * sizeof(uint8_t));
 	
 	//start modules
@@ -44,6 +49,9 @@ int main (void)
 	statusled_set(LOW);
 	blank_and_center();
 	
+	//ioport_set_pin_level(PIN_SHUTTER, ((uint32_t)frameAddress >= 0x20000500));
+	//ioport_set_pin_level(PIN_STATUSLED, (frameAddress == usbBulkBufferAddress));
+	
 	sleepmgr_lock_mode(SLEEPMGR_WAIT_FAST);
 	
 	//waiting for interrupts..
@@ -55,6 +63,12 @@ void SysTick_Handler(void) //systick timer ISR, called for each point
 {
 	if (playing)
 	{
+		if (framePos == 8)
+		{
+			ioport_set_pin_level(PIN_SHUTTER, toggle2);
+			toggle2 = !toggle2;
+		}
+		
 		if (framePos >= frameSize) //if frame reached the end
 		{
 			if (newFrameReady)
@@ -85,7 +99,6 @@ void SysTick_Handler(void) //systick timer ISR, called for each point
 					framePos = 0;
 					playing = false;
 					blank_and_center();
-					statusled_set(LOW);
 				}
 				
 			}
@@ -160,7 +173,6 @@ void usb_interrupt_out_callback(udd_ep_status_t status, iram_size_t length, udd_
 		{
 			playing = false;
 			framePos = 0;
-			statusled_set(LOW);
 			blank_and_center();
 		}
 		else if (usbInterruptBufferAddress[0] == 0x02)	//SHUTTER
@@ -253,7 +265,7 @@ void callback_vendor_disable(void) //usb connection closed, sleeping to save pow
 
 void shutter_set(bool level)
 {
-	ioport_set_pin_level(PIN_SHUTTER, level);
+	//ioport_set_pin_level(PIN_SHUTTER, level);
 }
 
 void statusled_set(bool level)

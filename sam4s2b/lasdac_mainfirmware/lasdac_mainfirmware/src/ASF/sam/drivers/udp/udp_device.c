@@ -1456,7 +1456,6 @@ static bool udd_ep_in_sent(udd_ep_id_t ep, bool b_tx)
 	return true; // Pending
 }
 
-
 static void udd_ep_out_received(udd_ep_id_t ep)
 {
 	udd_ep_job_t *ptr_job = &udd_ep_job[ep - 1];

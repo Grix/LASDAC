@@ -14,6 +14,8 @@ src\ASF\sam\drivers\spi\spi.c
 
 src\ASF\sam\drivers\udp\udp_device.c
 
+src\ASF\sam\drivers\wdt\wdt.c
+
 src\ASF\common\services\usb\class\vendor\device\udi_vendor_desc.c
 
 src\ASF\common\services\clock\sam4s\sysclk.c
