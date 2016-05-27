@@ -4,12 +4,11 @@
 #define MAIN_H_
 
 #include "asf.h"
-#include <malloc.h>
 
 //macros
 #define MAXSPEED 50000 //in pps
 #define MINSPEED 6 //in pps
-#define MAXFRAMESIZE 1801 //in points
+#define MAXFRAMESIZE 2001 //in points
 
 //global variables
 uint16_t frameSize = 0;					//size of frame buffer in points

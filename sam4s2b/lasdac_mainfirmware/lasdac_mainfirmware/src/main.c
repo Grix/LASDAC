@@ -15,11 +15,6 @@ Required Atmel Software Framework modules:
 #include "main.h"
 #include <malloc.h>
 
-
-///debug vars
-bool toggle = true;
-bool toggle2 = true;
-
 //ENTRY
 int main (void)
 {
@@ -49,9 +44,6 @@ int main (void)
 	statusled_set(LOW);
 	blank_and_center();
 	
-	//ioport_set_pin_level(PIN_SHUTTER, ((uint32_t)frameAddress >= 0x20000500));
-	//ioport_set_pin_level(PIN_STATUSLED, (frameAddress == usbBulkBufferAddress));
-	
 	sleepmgr_lock_mode(SLEEPMGR_WAIT_FAST);
 	
 	//waiting for interrupts..
@@ -63,12 +55,6 @@ void SysTick_Handler(void) //systick timer ISR, called for each point
 {
 	if (playing)
 	{
-		if (framePos == 8)
-		{
-			ioport_set_pin_level(PIN_SHUTTER, toggle2);
-			toggle2 = !toggle2;
-		}
-		
 		if (framePos >= frameSize) //if frame reached the end
 		{
 			if (newFrameReady)
@@ -122,18 +108,18 @@ void usb_bulk_out_callback(udd_ep_status_t status, iram_size_t length, udd_ep_id
 	//n+2:	frame size in points 16bit
 	//n+4:	flags
 	
-	if ( (!newFrameReady) && (status == UDD_EP_TRANSFER_OK) && (length <= MAXFRAMESIZE * 8 + 5) ) //if received ok and buffer is not full
+	if ( (status == UDD_EP_TRANSFER_OK) && (length <= MAXFRAMESIZE * 8 + 5) ) //if not invalid
 	{
 		uint16_t numOfPointBytes = length - 5; //from length of received data
 		uint16_t numOfPointBytes2 = ((usbBulkBufferAddress[numOfPointBytes + 3] << 8) + usbBulkBufferAddress[numOfPointBytes + 2]) * 8; //from control bytes
 		
 		if (numOfPointBytes == numOfPointBytes2) //sanity check, skip frame if conflicting frame size information
 		{
-			uint8_t flags = usbBulkBufferAddress[numOfPointBytes + 4];
-			newNotRepeat = (flags & (1 << 1));
-			outputSpeed = (usbBulkBufferAddress[numOfPointBytes + 1] << 8) + usbBulkBufferAddress[numOfPointBytes + 0];
-			
 			cpu_irq_enter_critical();
+				uint8_t flags = usbBulkBufferAddress[numOfPointBytes + 4];
+				newNotRepeat = (flags & (1 << 1));
+				outputSpeed = (usbBulkBufferAddress[numOfPointBytes + 1] << 8) + usbBulkBufferAddress[numOfPointBytes + 0];			
+			
 				if ( (!playing) || (flags & (1 << 0)) ) //if frame is to start playing immediately
 				{
 					uint8_t* previousFrameAddress = frameAddress;
@@ -177,7 +163,7 @@ void usb_interrupt_out_callback(udd_ep_status_t status, iram_size_t length, udd_
 		}
 		else if (usbInterruptBufferAddress[0] == 0x02)	//SHUTTER
 		{
-			shutter_set(usbInterruptBufferAddress[1]);
+			shutter_set( (usbInterruptBufferAddress[1] && true) );
 		}
 		else if (usbInterruptBufferAddress[0] == 0x03)	//STATUS_REQUEST
 		{
@@ -190,7 +176,7 @@ void usb_interrupt_out_callback(udd_ep_status_t status, iram_size_t length, udd_
 
 
 
-void point_output(void) //sends point data to the DACs, data is point number "framePos" in buffer "frameAddress".
+inline void point_output(void) //sends point data to the DACs, data is point number "framePos" in buffer "frameAddress".
 {
 	uint8_t* currentPoint = frameAddress + framePos;
 	
@@ -210,28 +196,22 @@ void point_output(void) //sends point data to the DACs, data is point number "fr
 	statusled_set( (currentPoint[4] || currentPoint[5] || currentPoint[6] || currentPoint[7]) ); //turn on status led if not blanked
 }
 
-void blank_and_center(void) //outputs a blanked and centered point
+inline void blank_and_center(void) //outputs a blanked and centered point
 {
-	uint8_t blankedPoint[8] = {0x00, 0x08, 0x00, 0x08, 0,0,0,0};
-	uint8_t* currentPoint = &blankedPoint[0];
-	
-	spi_write(SPI, (currentPoint[4] << 4) + (0b1101 << 12), 0, 0); //R
-	spi_write(SPI, (currentPoint[5] << 4) + (0b0001 << 12), 0, 0); //G
-	spi_write(SPI, (currentPoint[6] << 4) + (0b0101 << 12), 0, 0); //B
-	spi_write(SPI, (currentPoint[7] << 4) + (0b1001 << 12), 0, 0); //I
+	spi_write(SPI, (0b0010 << 12), 0, 0); //blank all colors
 	
 	if ((dacc_get_interrupt_status(DACC) & DACC_ISR_TXRDY) == DACC_ISR_TXRDY) //if DAC ready
 	{
 		dacc_set_channel_selection(DACC, 0);
-		dacc_write_conversion_data(DACC, (currentPoint[1] << 8) + currentPoint[0] ); //X
+		dacc_write_conversion_data(DACC, 0 ); //X
 		dacc_set_channel_selection(DACC, 1);
-		dacc_write_conversion_data(DACC, (currentPoint[3] << 8) + currentPoint[2] ); //Y
+		dacc_write_conversion_data(DACC, 0 ); //Y
 	}
 	
 	statusled_set(LOW);
 }
 
-void speed_set(uint32_t rate) //set the output speed in points per second
+inline void speed_set(uint32_t rate) //set the output speed in points per second
 {
 	if (rate > MAXSPEED)
 	rate = MAXSPEED;
@@ -263,12 +243,12 @@ void callback_vendor_disable(void) //usb connection closed, sleeping to save pow
 	sleepmgr_lock_mode(SLEEPMGR_WAIT_FAST);
 }
 
-void shutter_set(bool level)
+inline void shutter_set(bool level)
 {
 	//ioport_set_pin_level(PIN_SHUTTER, level);
 }
 
-void statusled_set(bool level)
+inline void statusled_set(bool level)
 {
 	ioport_set_pin_level(PIN_STATUSLED, level);
 }
