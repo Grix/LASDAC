@@ -19,13 +19,15 @@ Required Atmel Software Framework modules:
 int main (void)
 {
 	//allocate memory to buffers
-	frameAddress = malloc(MAXFRAMESIZE * 8 * sizeof(uint8_t));
-	newFrameAddress = malloc(MAXFRAMESIZE * 8 * sizeof(uint8_t));
-	usbBulkBufferAddress = malloc(MAXFRAMESIZE * 8 * sizeof(uint8_t));
-	usbInterruptBufferAddress = malloc(8 * sizeof(uint8_t));
+	frameAddress = malloc(MAXFRAMESIZE * 8);
+	newFrameAddress = malloc(MAXFRAMESIZE * 8);
+	usbBulkBufferAddress = malloc(MAXFRAMESIZE * 8);
+	usbInterruptBufferAddress = malloc(8);
 	
 	//start modules
 	sysclk_init();
+	pmc_disable_all_periph_clk();
+	pmc_disable_pllbck();
 	dac_init();
 	spi_init();
 	iopins_init();
@@ -279,7 +281,7 @@ void spi_init(void) //setup SPI for DAC084S085
 	spi_set_clock_polarity(SPI, 0, 0);
 	spi_set_clock_phase(SPI, 0, 0);
 	spi_set_bits_per_transfer(SPI, 0, SPI_CSR_BITS_16_BIT);
-	spi_set_baudrate_div(SPI, 0, 6 ); //96Mhz / 6 = 16MHz
+	spi_set_baudrate_div(SPI, 0, 7 ); //96MHz / 7 = 13.714..MHz
 	spi_set_transfer_delay(SPI, 0, 0, 0);
 	spi_enable(SPI);
 }
